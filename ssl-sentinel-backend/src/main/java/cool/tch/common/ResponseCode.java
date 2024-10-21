@@ -9,7 +9,9 @@ public enum ResponseCode {
 
     SUCCESS(200, "SUCCESS"),
 
-    ERROR(400, "ERROR");
+    ERROR(400, "ERROR"),
+
+    ERROR_DEFAULT(500,"系统繁忙，请稍后重试");
 
     public Integer code;
     public String message;
