@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { ElMessage } from 'element-plus'
 
 // create an axios instance
 const service = axios.create({
@@ -24,13 +25,15 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
   response => {
+    console.log("response = ", response)
     const res = response.data
 
     if (res.code !== 200) {
-      Message({
+      ElMessage({
         message: res.message || 'Error',
         type: 'error',
-        duration: 5 * 1000
+        duration: 3 * 1000,
+        plain: true
       })
 
       return Promise.reject(new Error(res.message || 'Error'))
@@ -42,10 +45,11 @@ service.interceptors.response.use(
   },
   error => {
     console.log('err' + error)
-    Message({
+    ElMessage({
       message: error.message,
       type: 'error',
-      duration: 5 * 1000
+      duration: 3 * 1000,
+      plain: true
     })
     return Promise.reject(error)
   }
