@@ -1,0 +1,3 @@
+ssl-sentinel-backend/target/classes/*
+ssl-sentinel-backend/.idea/*
+ssl-sentinel-backend/target/test-classes/*
