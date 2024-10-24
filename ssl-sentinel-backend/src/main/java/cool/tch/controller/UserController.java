@@ -1,10 +1,11 @@
 package cool.tch.controller;
 
-import cool.tch.service.impl.UserService;
-import lombok.AllArgsConstructor;
+import cool.tch.common.ResponseResult;
+import cool.tch.dto.LoginDto;
+import cool.tch.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author denchouka
@@ -12,12 +13,20 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2024/10/20 22:31
  */
 @RestController()
-@RequestMapping("/user")
-@AllArgsConstructor
 public class UserController {
 
     @Autowired
-    private final UserService userService;
+    private UserService userService;
+
+    @GetMapping("/test")
+    public String test() {
+        return "test";
+    }
+
+    @PostMapping("/login")
+    public ResponseResult login(@Validated @RequestBody LoginDto loginDto) {
+        return userService.login(loginDto);
+    }
 
 
 }
