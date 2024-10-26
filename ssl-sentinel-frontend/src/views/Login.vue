@@ -147,7 +147,7 @@ export default {
 
           login(that.loginForm).then(res => {
             // 画面跳转
-            that.$router.push('/about')
+            that.$router.push('/home')
           }).catch(() => {
             that.loading = false
           })
