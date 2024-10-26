@@ -18,11 +18,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/test")
-    public String test() {
-        return "test";
-    }
-
     @PostMapping("/login")
     public ResponseResult login(@Validated @RequestBody LoginDto loginDto) {
         return userService.login(loginDto);
