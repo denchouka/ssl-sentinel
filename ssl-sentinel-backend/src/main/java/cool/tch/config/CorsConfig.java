@@ -18,7 +18,7 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/**") // 指定所有路径
                 .allowedOrigins("http://localhost:5173", "https://ssl.tch.cool") // 允许所有源
                 .allowedMethods("GET", "POST") // 允许的方法
-                .allowedHeaders("Content-Type", "Access-Token", "Authorization") // 允许所有头
+                .allowedHeaders("Content-Type", "Access-Token", "Authorization", "User-Name") // 允许所有头
                 .allowCredentials(true) // 是否允许发送凭证
                 .maxAge(3600); // 预检请求的有效期（秒）
     }
