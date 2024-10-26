@@ -51,12 +51,6 @@
           clearable
         />
       </el-form-item>
-      <!-- 记住我 -->
-      <div style="margin-bottom: 10px;margin-left: 2px">
-        <el-checkbox v-model="loginForm.rememberMe">
-          <span style="color: white">记住我</span>
-        </el-checkbox>
-      </div>
       <!-- 登 录 -->
       <el-button
         :loading="loading"
@@ -115,7 +109,6 @@ export default {
       loginForm: {
         username: null,
         password: null,
-        rememberMe: false,
         code: null
       },
       loginRules: {
@@ -149,11 +142,12 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          const that = this
+          let that = this
           that.loading = true
+
           login(that.loginForm).then(res => {
             // 画面跳转
-            that.$router.push('/home')
+            that.$router.push('/about')
           }).catch(() => {
             that.loading = false
           })
