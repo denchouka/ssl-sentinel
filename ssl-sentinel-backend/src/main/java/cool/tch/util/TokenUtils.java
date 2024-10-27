@@ -12,6 +12,8 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 
+import static cool.tch.common.Constant.*;
+
 /**
  * @author denchouka
  * @description Token工具类
@@ -47,11 +49,11 @@ public class TokenUtils {
                     .withClaim("ip", ip)
                     .withClaim("time", Instant.now())
                     // 加盐
-                    .withClaim("salt", Constant.TOKEN_SECRET_SALT)
+                    .withClaim("salt", TOKEN_SECRET_SALT)
                     // 1H后过期
-                    .withExpiresAt(Date.from(Instant.now().plusSeconds(Constant.TOKEN_EXPIRE_DATE)))
+                    .withExpiresAt(Date.from(Instant.now().plusSeconds(TOKEN_EXPIRE_DATE)))
                     // 密钥
-                    .sign(Algorithm.HMAC256(Constant.TOKEN_SECRET_KEY));
+                    .sign(Algorithm.HMAC256(TOKEN_SECRET_KEY));
         } catch (Exception e) {
             throw new BusinessException("生成token失败");
         }
@@ -72,7 +74,7 @@ public class TokenUtils {
 
         // 验证token有效性
         try{
-            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(Constant.TOKEN_SECRET_KEY)).build();
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(TOKEN_SECRET_KEY)).build();
             verifier.verify(token);
             return true;
         } catch (JWTVerificationException e) {
