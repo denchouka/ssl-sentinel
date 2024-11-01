@@ -146,6 +146,8 @@ export default {
           that.loading = true
 
           login(that.loginForm).then(res => {
+            // 保存username
+            localStorage.setItem('user-name', that.loginForm.username)
             // 画面跳转
             that.$router.push('/home')
           }).catch(() => {
