@@ -30,17 +30,17 @@ public class Constant {
     /**
      * 请求头 Content-Type
      */
-    public static final String REQUEST_HEADER_CONTENT_TYPE = "Content-Type";
+    public static final String REQUEST_HEADER_CONTENT_TYPE = "content-type";
 
     /**
      * 请求头 Access-Token
      */
-    public static final String REQUEST_HEADER_ACCESS_TOKEN = "Access-Token";
+    public static final String REQUEST_HEADER_ACCESS_TOKEN = "access-token";
 
     /**
      * 请求头 Authorization
      */
-    public static final String REQUEST_HEADER_AUTHORIZATION = "Authorization";
+    public static final String REQUEST_HEADER_AUTHORIZATION = "authorization";
 
     /**
      * 预检请求头
@@ -48,9 +48,14 @@ public class Constant {
     public static final String REQUEST_HEADER_PRE_FLIGHT = "access-control-request-headers";
 
     /**
+     * 预检请求方法
+     */
+    public static final String REQUEST_METHOD_PRE_FLIGHT = "OPTIONS";
+
+    /**
      * 请求头 User-Name
      */
-    public static final String REQUEST_HEADER_USER_NAME = "User-Name";
+    public static final String REQUEST_HEADER_USER_NAME = "user-name";
 
     /**
      * 请求源 localhost
@@ -71,4 +76,9 @@ public class Constant {
      * 请求方法 POST
      */
     public static final String REQUEST_METHOD_POST = "POST";
+
+    /**
+     * 跨域的响应报头
+     */
+    public static final String ACCESS_CONTROL_EXPOSE_HEADERS = "access-control-expose-headers";
 }
