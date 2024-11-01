@@ -10,9 +10,14 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    const token = localStorage.getItem('authToken')
+    // Retrieve token and username from localStorage
+    const token = localStorage.getItem('access-token')
+    const username = localStorage.getItem('user-name')
     if (token) {
-      config.headers.Authorization = token
+      config.headers['access-token'] = token
+    }
+    if (username) {
+      config.headers['user-name'] = username
     }
     return config
   },
@@ -39,7 +44,7 @@ service.interceptors.response.use(
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
       // 保存token
-      localStorage.setItem('authToken', null)
+      localStorage.setItem('access-token', response.headers['access-token'])
       return res
     }
   },
