@@ -11,6 +11,8 @@ public enum ResponseCode {
 
     ERROR(400, "ERROR"),
 
+    HTTP_UNAUTHORIZED(401, "token已失效，请重新登录"),
+
     ERROR_DEFAULT(500,"系统繁忙，请稍后重试");
 
     public Integer code;
