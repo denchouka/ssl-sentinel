@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
+import { ACCESS_TOKEN, USER_NAME } from './constant'
 
 // create an axios instance
 const service = axios.create({
@@ -11,13 +12,13 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // Retrieve token and username from localStorage
-    const token = localStorage.getItem('access-token')
-    const username = localStorage.getItem('user-name')
+    const token = localStorage.getItem(ACCESS_TOKEN)
+    const username = localStorage.getItem(USER_NAME)
     if (token) {
-      config.headers['access-token'] = token
+      config.headers[ACCESS_TOKEN] = token
     }
     if (username) {
-      config.headers['user-name'] = username
+      config.headers[USER_NAME] = username
     }
     return config
   },
@@ -50,7 +51,7 @@ service.interceptors.response.use(
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
       // 保存token
-      localStorage.setItem('access-token', response.headers['access-token'])
+      localStorage.setItem(ACCESS_TOKEN, response.headers[ACCESS_TOKEN])
       return res
     }
   },

@@ -79,6 +79,7 @@
 import { validUsername, validPassword, validCode } from '@/utils/validate'
 import { login } from '@/api/index'
 import cover from '@/assets/login.jpg'
+import {  USER_NAME } from '@/utils/constant'
 
 export default {
   name: 'Login',
@@ -147,7 +148,7 @@ export default {
 
           login(that.loginForm).then(res => {
             // 保存username
-            localStorage.setItem('user-name', that.loginForm.username)
+            localStorage.setItem('USER_NAME', that.loginForm.username)
             // 画面跳转
             that.$router.push('/home')
           }).catch(() => {
