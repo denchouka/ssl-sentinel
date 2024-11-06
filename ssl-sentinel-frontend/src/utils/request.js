@@ -33,6 +33,12 @@ service.interceptors.response.use(
     console.log("response = ", response)
     const res = response.data
 
+    if (res.code === 401) {
+      console.error('token失效')
+      // 重新登录
+      that.$router.push('/login')
+    }
+
     if (res.code !== 200) {
       ElMessage({
         message: res.message || 'Error',
