@@ -5,16 +5,32 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'login',
+      name: 'Login',
       component: () => import('../views/Login.vue')
     },
     {
       path: '/home',
-      name: 'home',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/Home.vue')
+      name: 'Home',
+      component: () => import('../views/Home.vue'),
+      meta: {title: 'Home', show: false}
+    },
+    {
+      path: '/addEvent',
+      name: 'AddEvent',
+      component: () => import('../views/AddEvent.vue'),
+      meta: {title: '添加事件', show: true}
+    },
+    {
+      path: '/eventList',
+      name: 'EventList',
+      component: () => import('../views/EventList.vue'),
+      meta: {title: '事件列表', show: true}
+    },
+    {
+      path: '/eventHistory',
+      name: 'EventHistory',
+      component: () => import('../views/EventHistory.vue'),
+      meta: {title: '执行历史', show: true}
     }
   ]
 })
