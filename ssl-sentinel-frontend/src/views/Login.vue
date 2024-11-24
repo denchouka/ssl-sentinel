@@ -150,7 +150,7 @@ export default {
             // 保存username
             localStorage.setItem(USER_NAME, that.loginForm.username)
             // 画面跳转
-            that.$router.push('/home')
+            that.$router.push('/addEvent')
           }).catch(() => {
             that.loading = false
           })
