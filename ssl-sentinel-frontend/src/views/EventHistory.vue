@@ -11,5 +11,8 @@ export default {
 }
 </script>
 
-<style>
+<style rel="stylesheet/scss" lang="scss" scoped>
+h1 {
+  color: black;
+}
 </style>
