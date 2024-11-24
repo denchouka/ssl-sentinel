@@ -33,6 +33,12 @@ const router = createRouter({
       name: 'EventHistory',
       component: () => import('../views/EventHistory.vue'),
       meta: {title: '执行历史', menu: true, show: true}
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: '404',
+      component: () => import('../views/error/404.vue'),
+      meta: {title: '404', menu: true, show: false}
     }
   ]
 })
