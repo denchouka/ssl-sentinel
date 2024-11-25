@@ -66,7 +66,7 @@
     <div class="el-login-footer">
       <div>
         Copyright © {{ 2024 }} - {{ new Date().getFullYear() }}  
-      <a href="https://tch.cool" target="_blank">
+      <a href="https://tch.cool" target="_blank" class="site">
         我剑也未尝不利
       </a>
        . All Rights Reserved.
@@ -193,6 +193,13 @@ $bg: #2d3a4b;
     border-radius: 5px;
     color: #454545;
   }
+
+  .site {
+    text-decoration: none;
+    color: hsla(160, 100%, 37%, 1);
+    transition: 0.4s;
+    padding: 3px;
+  }
 }
 </style>
 
@@ -205,7 +212,6 @@ $light_gray: #eee;
   position: fixed;
   height: 100%;
   width: 100%;
-  background-color: $bg;
 
   .login-form {
     position: absolute;
