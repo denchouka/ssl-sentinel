@@ -17,21 +17,21 @@ const router = createRouter({
       meta: {title: '登录', menu: false}
     },
     {
-      path: '/eventList',
-      name: 'EventList',
-      component: () => import('../views/EventList.vue'),
-      meta: {title: '事件列表', menu: true, show: true, icon: './assets/list.png'}
+      path: '/taskList',
+      name: 'TaskList',
+      component: () => import('../views/TaskList.vue'),
+      meta: {title: '任务列表', menu: true, show: true, icon: './assets/list.png'}
     },
     {
-      path: '/addEvent',
-      name: 'AddEvent',
-      component: () => import('../views/AddEvent.vue'),
-      meta: {title: '添加事件', menu: true, show: true, icon: './assets/add.png'}
+      path: '/addTask',
+      name: 'AddTask',
+      component: () => import('../views/AddTask.vue'),
+      meta: {title: '添加任务', menu: true, show: true, icon: './assets/add.png'}
     },
     {
-      path: '/eventHistory',
-      name: 'EventHistory',
-      component: () => import('../views/EventHistory.vue'),
+      path: '/taskHistory',
+      name: 'TaskHistory',
+      component: () => import('../views/TaskHistory.vue'),
       meta: {title: '执行历史', menu: true, show: true, icon: './assets/history.png'}
     },
     {
