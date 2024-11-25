@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import { ElMenu, ElMenuItem, ElDivider } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
 import { computed } from 'vue'
 import Header from '@/views/container/Header.vue'
@@ -45,8 +44,6 @@ import Footer from '@/views/container/Footer.vue'
 export default {
   name: 'app',
   components: {
-    ElMenu,
-    ElMenuItem,
     Header,
     Footer
   },
