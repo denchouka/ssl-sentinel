@@ -19,19 +19,19 @@ const router = createRouter({
     {
       path: '/taskList',
       name: 'TaskList',
-      component: () => import('../views/TaskList.vue'),
+      component: () => import('../views/task/TaskList.vue'),
       meta: {title: '任务列表', menu: true, show: true, icon: './assets/list.png'}
     },
     {
       path: '/addTask',
       name: 'AddTask',
-      component: () => import('../views/AddTask.vue'),
+      component: () => import('../views/task/AddTask.vue'),
       meta: {title: '添加任务', menu: true, show: true, icon: './assets/add.png'}
     },
     {
       path: '/taskHistory',
       name: 'TaskHistory',
-      component: () => import('../views/TaskHistory.vue'),
+      component: () => import('../views/task/TaskHistory.vue'),
       meta: {title: '执行历史', menu: true, show: true, icon: './assets/history.png'}
     },
     {
