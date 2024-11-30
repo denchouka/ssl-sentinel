@@ -13,6 +13,14 @@ export function logout() {
     method: 'get'
   })
 }
+export function addTask(data) {
+  return request({
+    url: '/task/add',
+    method: 'post',
+    data
+  })
+}
+
 
 export function changeMfaCode(data) {
   return request({
