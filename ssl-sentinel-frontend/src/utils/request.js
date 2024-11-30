@@ -1,6 +1,8 @@
 import axios from 'axios'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { ACCESS_TOKEN, USER_NAME } from './constant'
+import router from '../router'
+
 
 // create an axios instance
 const service = axios.create({
@@ -34,13 +36,22 @@ service.interceptors.response.use(
     console.log("response = ", response)
     const res = response.data
 
-    if (res.code === 401) {
+    if (res.code === 200) {
+      // 保存token
+      localStorage.setItem(ACCESS_TOKEN, response.headers[ACCESS_TOKEN])
+      return res
+    } else if (res.code === 401) {
       console.error('token失效')
-      // 重新登录
-      that.$router.push('/login')
-    }
+      ElMessageBox.confirm('登录失效，请重新登录', '提示', {
+        confirmButtonText: '重新登录',
+        type: 'warning'
+      }).then(() => {
+        // 重新登录
+        router.push('/')
+      })
 
-    if (res.code !== 200) {
+      return Promise.reject(new Error(res.message || 'Error'))
+    } else {
       ElMessage({
         message: res.message || 'Error',
         type: 'error',
@@ -49,10 +60,6 @@ service.interceptors.response.use(
       })
 
       return Promise.reject(new Error(res.message || 'Error'))
-    } else {
-      // 保存token
-      localStorage.setItem(ACCESS_TOKEN, response.headers[ACCESS_TOKEN])
-      return res
     }
   },
   error => {
