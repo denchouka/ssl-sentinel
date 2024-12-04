@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cool.tch.mapper.TaskMapper">
+
+    <select id="addTask" resultType="Integer">
+        insert into task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            name,
+            ddl,
+            date,
+            email,
+            content,
+            <if test="remark != null">remark</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{name},
+            #{ddl},
+            #{date},
+            #{email},
+            #{content},
+            <if test="remark != null">#{remark}</if>
+        </trim>
+    </select>
+
+</mapper>
