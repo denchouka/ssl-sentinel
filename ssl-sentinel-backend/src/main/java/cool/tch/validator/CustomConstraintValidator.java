@@ -1,8 +1,9 @@
 package cool.tch.validator;
 
+import cool.tch.annotations.FutureOrPresentDay;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import javax.validation.constraints.FutureOrPresent;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -12,7 +13,7 @@ import java.util.Date;
  * @description 注解FutureOrPresent的自定义验证器
  * @date 2024/12/1 15:28
  */
-public class CustomConstraintValidator implements ConstraintValidator<FutureOrPresent, Date> {
+public class CustomConstraintValidator implements ConstraintValidator<FutureOrPresentDay, Date> {
 
     @Override
     public boolean isValid(Date date, ConstraintValidatorContext context) {

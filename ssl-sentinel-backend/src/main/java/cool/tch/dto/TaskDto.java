@@ -1,6 +1,7 @@
 package cool.tch.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import cool.tch.annotations.FutureOrPresentDay;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -25,12 +26,12 @@ public class TaskDto implements Serializable {
 
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    @FutureOrPresent(message = "过期日期必须是以后或现在的日期")
+    @FutureOrPresentDay(message = "过期日期必须是以后或现在的日期")
     private Date ddl;
 
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    @FutureOrPresent(message = "提醒日期必须是以后或现在的日期")
+    @FutureOrPresentDay(message = "提醒日期必须是以后或现在的日期")
     private Date date;
 
     @Email(message = "邮箱地址不合法")
