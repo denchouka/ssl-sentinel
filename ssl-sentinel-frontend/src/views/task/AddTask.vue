@@ -111,8 +111,13 @@
 
 
       <el-form-item class="button">
-        <el-button type="primary" @click="submitForm(taskFormRef)">
-          添加
+        <el-button
+          type="primary"
+          :loading="loading"
+          @click="submitForm(taskFormRef)"
+        >
+          <span v-if="!loading">添 加</span>
+          <span v-else>添 加 中...</span>
         </el-button>
         <el-button @click="resetForm(taskFormRef)">Reset</el-button>
       </el-form-item>
@@ -126,6 +131,8 @@ import { reactive, ref } from 'vue'
 import type { ComponentSize, FormInstance, FormRules } from 'element-plus'
 import { addTask } from '@/api/index'
 import { formatDate } from '@/utils/index'
+
+var loading = ref(false)
 
 interface TaskForm {
   domainName: string
@@ -206,10 +213,11 @@ const rules = reactive<FormRules<TaskForm>>({
  */
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
+
   await formEl.validate((valid, fields) => {
     if (valid) {
       // addTask
-      console.log(taskForm)
+      loading.value = true
       
       const taskDto = {
         domainName: taskForm.domainName,
@@ -224,7 +232,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       }
       console.log(taskDto)
       addTask(taskDto).then(() => {
-        console.log('添加任务成功!')
+        loading.value = false
       })
     } else {
       console.log('error submit!', fields)
