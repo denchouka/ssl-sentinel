@@ -1,6 +1,6 @@
 package cool.tch.annotations;
 
-import cool.tch.validator.CustomConstraintValidator;
+import cool.tch.validator.FutureOrPresentDayValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -18,7 +18,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @date 2024/12/4 22:52
  */
 @Documented
-@Constraint(validatedBy = CustomConstraintValidator.class)
+@Constraint(validatedBy = FutureOrPresentDayValidator.class)
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 @Retention(RUNTIME)
 public @interface FutureOrPresentDay {

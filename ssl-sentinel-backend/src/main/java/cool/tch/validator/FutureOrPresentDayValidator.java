@@ -10,10 +10,10 @@ import java.util.Date;
 
 /**
  * @author denchouka
- * @description 注解FutureOrPresent的自定义验证器
+ * @description 注解FutureOrPresentDay的自定义验证器
  * @date 2024/12/1 15:28
  */
-public class CustomConstraintValidator implements ConstraintValidator<FutureOrPresentDay, Date> {
+public class FutureOrPresentDayValidator implements ConstraintValidator<FutureOrPresentDay, Date> {
 
     @Override
     public boolean isValid(Date date, ConstraintValidatorContext context) {
