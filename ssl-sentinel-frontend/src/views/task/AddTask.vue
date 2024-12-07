@@ -176,26 +176,26 @@ const taskForm = reactive<TaskForm>({
 const rules = reactive<FormRules<TaskForm>>({
   domainName: [
     { required: true, message: '请输入域名', trigger: 'blur' },
-    { min: 3, max: 10, message: 'Length should be 3 to 10', trigger: 'blur' },
+    { min: 3, max: 10, message: 'Length should be 3 to 10', trigger: 'blur' }
   ],
   applicationPlatform: [
     { required: true, message: '请输入申请平台', trigger: 'blur' },
-    { min: 3, max: 10, message: 'Length should be 3 to 10', trigger: 'blur' },
+    { min: 3, max: 10, message: 'Length should be 3 to 10', trigger: 'blur' }
   ],
   usagePlatform: [
     { required: true, message: '请输入使用平台', trigger: 'blur' },
-    { min: 3, max: 10, message: 'Length should be 3 to 10', trigger: 'blur' },
+    { min: 3, max: 10, message: 'Length should be 3 to 10', trigger: 'blur' }
   ],
   purpose: [
     { required: true, message: '请输入用途', trigger: 'blur' },
-    {  min: 10, max: 100, message: 'Length should be 10 to 100', trigger: 'blur' },
+    {  min: 10, max: 100, message: 'Length should be 10 to 100', trigger: 'blur' }
   ],
   ddl: [
     {
       type: 'date',
       required: true,
       message: '请选择过期日期',
-      trigger: 'change',
+      trigger: 'change'
     },
   ],
   date: [
@@ -203,21 +203,21 @@ const rules = reactive<FormRules<TaskForm>>({
       type: 'date',
       required: true,
       message: '请选择提醒日期',
-      trigger: 'change',
+      trigger: 'change'
     },
   ],
   email: [
     { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-    { max: 50, message: 'Length should be less than 50', trigger: 'blur' },
+    { max: 50, message: 'Length should be less than 50', trigger: 'blur' }
   ],
   content: [
     { required: true, message: '请输入提醒内容', trigger: 'blur' },
-    { min: 10, max: 100, message: 'Length should be 10 to 100', trigger: 'blur' },
+    { min: 10, max: 100, message: 'Length should be 10 to 100', trigger: 'blur' }
   ],
   remark: [
     { required: false, message: '请输入备注', trigger: 'blur' },
-    {  max: 100, message: 'Length should be less than 100', trigger: 'blur' },
-  ],
+    {  max: 100, message: 'Length should be less than 100', trigger: 'blur' }
+  ]
 })
 
 /**
