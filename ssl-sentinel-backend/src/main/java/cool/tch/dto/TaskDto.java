@@ -20,9 +20,21 @@ public class TaskDto implements Serializable {
 
     private static final long serialVersionUID = 3490539871833448081L;
 
-    @NotBlank(message = "名称不能为空")
-    @Length(min = 3, max = 10, message = "名称至少3位，最大10位")
-    private String name;
+    @NotBlank(message = "域名不能为空")
+    @Length(min = 3, max = 10, message = "域名至少3位，最大10位")
+    private String domainName;
+
+    @NotBlank(message = "申请平台不能为空")
+    @Length(min = 3, max = 10, message = "申请平台至少3位，最大10位")
+    private String applicationPlatform;
+
+    @NotBlank(message = "使用平台不能为空")
+    @Length(min = 3, max = 10, message = "使用平台至少3位，最大10位")
+    private String usagePlatform;
+
+    @NotBlank(message = "用途")
+    @Length(min = 10, max = 100, message = "用途至少10位，最大100位")
+    private String purpose;
 
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")

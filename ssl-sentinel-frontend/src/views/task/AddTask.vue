@@ -11,8 +11,47 @@
       :size="formSize"
       status-icon
     >
-      <el-form-item label="名称" prop="name">
-        <el-input v-model="taskForm.name" minlength="3" maxlength="10" show-word-limit clearable/>
+      <el-form-item label="域名" prop="domainName">
+        <el-input
+          v-model="taskForm.domainName"
+          minlength="3"
+          maxlength="10"
+          show-word-limit
+          placeholder="输入域名"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item label="申请平台" prop="applicationPlatform">
+        <el-input
+          v-model="taskForm.applicationPlatform"
+          minlength="3"
+          maxlength="10"
+          show-word-limit
+          placeholder="输入申请平台"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item label="使用平台" prop="usagePlatform">
+        <el-input
+          v-model="taskForm.usagePlatform"
+          minlength="3"
+          maxlength="10"
+          show-word-limit
+          placeholder="输入使用平台"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item label="用途" prop="purpose">
+        <el-input
+          v-model="taskForm.purpose"
+          :rows="2"
+          type="textarea"
+          minlength="10"
+          maxlength="100"
+          show-word-limit
+          placeholder="输入用途"
+          clearable
+        />
       </el-form-item>
       <el-form-item label="过期日期" required>
         <el-col :span="24">
@@ -39,13 +78,35 @@
         </el-col>
       </el-form-item>
       <el-form-item label="邮箱地址" prop="email">
-        <el-input v-model="taskForm.email" show-word-limit maxlength="50" clearable/>
+        <el-input
+          v-model="taskForm.email"
+          show-word-limit
+          maxlength="50"
+          placeholder="输入邮箱地址"
+          clearable
+        />
       </el-form-item>
       <el-form-item label="提醒内容" prop="content">
-        <el-input v-model="taskForm.content" :rows="2" type="textarea" minlength="10" maxlength="100" show-word-limit clearable/>
+        <el-input
+          v-model="taskForm.content"
+          :rows="2"
+          type="textarea"
+          minlength="10"
+          maxlength="100"
+          show-word-limit
+          placeholder="输入提醒内容"
+          clearable/>
       </el-form-item>
       <el-form-item label="备注" prop="remark">
-        <el-input v-model="taskForm.remark" :rows="2" type="textarea" minlength="10" maxlength="100" show-word-limit clearable/>
+        <el-input
+          v-model="taskForm.remark"
+          :rows="2"
+          type="textarea"
+          maxlength="100"
+          show-word-limit
+          placeholder="输入备注"
+          clearable
+        />
       </el-form-item>
 
 
@@ -67,7 +128,10 @@ import { addTask } from '@/api/index'
 import { formatDate } from '@/utils/index'
 
 interface TaskForm {
-  name: string
+  domainName: string
+  applicationPlatform: string,
+  usagePlatform: string,
+  purpose: string,
   ddl: string
   date: string
   email: string
@@ -78,7 +142,10 @@ interface TaskForm {
 const formSize = ref<ComponentSize>('default')
 const taskFormRef = ref<FormInstance>()
 const taskForm = reactive<TaskForm>({
-  name: '',
+  domainName: '',
+  applicationPlatform: '',
+  usagePlatform: '',
+  purpose: '',
   ddl: '',
   date: '',
   email: '',
@@ -87,15 +154,27 @@ const taskForm = reactive<TaskForm>({
 })
 
 const rules = reactive<FormRules<TaskForm>>({
-  name: [
-    { required: true, message: 'Please input name', trigger: 'blur' },
+  domainName: [
+    { required: true, message: '请输入域名', trigger: 'blur' },
     { min: 3, max: 10, message: 'Length should be 3 to 10', trigger: 'blur' },
+  ],
+  applicationPlatform: [
+    { required: true, message: '请输入申请平台', trigger: 'blur' },
+    { min: 3, max: 10, message: 'Length should be 3 to 10', trigger: 'blur' },
+  ],
+  usagePlatform: [
+    { required: true, message: '请输入使用平台', trigger: 'blur' },
+    { min: 3, max: 10, message: 'Length should be 3 to 10', trigger: 'blur' },
+  ],
+  purpose: [
+    { required: true, message: '请输入用途', trigger: 'blur' },
+    {  min: 10, max: 100, message: 'Length should be 10 to 100', trigger: 'blur' },
   ],
   ddl: [
     {
       type: 'date',
       required: true,
-      message: 'Please pick a date',
+      message: '请选择过期日期',
       trigger: 'change',
     },
   ],
@@ -103,20 +182,20 @@ const rules = reactive<FormRules<TaskForm>>({
     {
       type: 'date',
       required: true,
-      message: 'Please pick a date',
+      message: '请选择提醒日期',
       trigger: 'change',
     },
   ],
   email: [
-    { required: true, message: 'Please input email', trigger: 'blur' },
+    { required: true, message: '请输入邮箱地址', trigger: 'blur' },
     { max: 50, message: 'Length should be less than 50', trigger: 'blur' },
   ],
   content: [
-    { required: true, message: 'Please input content', trigger: 'blur' },
+    { required: true, message: '请输入提醒内容', trigger: 'blur' },
     { min: 10, max: 100, message: 'Length should be 10 to 100', trigger: 'blur' },
   ],
   remark: [
-    { required: false, message: 'Please input remark', trigger: 'blur' },
+    { required: false, message: '请输入备注', trigger: 'blur' },
     {  max: 100, message: 'Length should be less than 100', trigger: 'blur' },
   ],
 })
@@ -133,7 +212,10 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       console.log(taskForm)
       
       const taskDto = {
-        name: taskForm.name,
+        domainName: taskForm.domainName,
+        applicationPlatform: taskForm.applicationPlatform,
+        usagePlatform: taskForm.usagePlatform,
+        purpose: taskForm.purpose,
         ddl: formatDate(taskForm.ddl),
         date: formatDate(taskForm.date),
         email: taskForm.email,

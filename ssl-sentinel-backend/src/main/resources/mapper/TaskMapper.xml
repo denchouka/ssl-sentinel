@@ -6,7 +6,10 @@
     <select id="addTask" resultType="Integer">
         insert into task
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            name,
+            domain_name,
+            application_platform,
+            usage_platform,
+            purpose,
             ddl,
             date,
             email,
@@ -15,7 +18,10 @@
         </trim>
         values
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            #{name},
+            #{domainName},
+            #{applicationPlatform},
+            #{usagePlatform},
+            #{purpose},
             #{ddl},
             #{date},
             #{email},

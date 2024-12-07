@@ -24,7 +24,13 @@ public class Task implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private String name;
+    private String domainName;
+
+    private String applicationPlatform;
+
+    private String usagePlatform;
+
+    private String purpose;
 
     private Date ddl;
 
