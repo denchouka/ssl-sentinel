@@ -129,11 +129,18 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import type { ComponentSize, FormInstance, FormRules } from 'element-plus'
+import { ElMessageBox } from 'element-plus'
 import { addTask } from '@/api/index'
 import { formatDate } from '@/utils/index'
+import { useRouter } from 'vue-router'
 
+// 定义loading状态
 var loading = ref(false)
 
+// 获取路由器实例
+const router = useRouter()
+
+// 定义任务表单的数据结构
 interface TaskForm {
   domainName: string
   applicationPlatform: string,
@@ -146,8 +153,13 @@ interface TaskForm {
   remark: string
 }
 
+// 表单尺寸选项，为默认值
 const formSize = ref<ComponentSize>('default')
+
+// 表单实例引用，用于访问表单的方法
 const taskFormRef = ref<FormInstance>()
+
+// 使用reactive创建一个响应式的任务表单对象，并初始化
 const taskForm = reactive<TaskForm>({
   domainName: '',
   applicationPlatform: '',
@@ -160,6 +172,7 @@ const taskForm = reactive<TaskForm>({
   remark: '',
 })
 
+// 验证规则
 const rules = reactive<FormRules<TaskForm>>({
   domainName: [
     { required: true, message: '请输入域名', trigger: 'blur' },
@@ -230,9 +243,28 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         content: taskForm.content,
         remark: taskForm.remark
       }
-      console.log(taskDto)
+      // 发送添加任务请求
       addTask(taskDto).then(() => {
         loading.value = false
+        // 弹框提醒
+        ElMessageBox.confirm(
+          '添加任务成功',
+          '提示',
+          {
+            confirmButtonText: '查看已添加任务',
+            cancelButtonText: '继续添加',
+            type: 'success',
+            draggable: true
+          }
+        )
+          .then(() => {
+            // 查看已添加任务,跳转到任务列表
+            router.push('/taskList')
+          })
+          .catch(() => {
+            // 继续添加，重置表单
+            resetForm(taskFormRef.value)
+          })
       })
     } else {
       console.log('error submit!', fields)
