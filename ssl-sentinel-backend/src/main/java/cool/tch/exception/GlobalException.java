@@ -4,7 +4,7 @@ import cool.tch.common.ResponseResult;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -60,8 +60,8 @@ public class GlobalException {
     @ResponseBody
     public ResponseResult MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex) {
         // 获取所有的错误信息
-        String errorMessage = ex.getBindingResult().getFieldErrors().stream()
-                .map(FieldError::getDefaultMessage)
+        String errorMessage = ex.getBindingResult().getAllErrors().stream()
+                .map(ObjectError::getDefaultMessage)
                 .collect(Collectors.joining(", "));
 
         return ResponseResult.error(errorMessage);
