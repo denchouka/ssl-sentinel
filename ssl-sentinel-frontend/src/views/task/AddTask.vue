@@ -265,6 +265,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             // 继续添加，重置表单
             resetForm(taskFormRef.value)
           })
+      }).catch(() => {
+        loading.value = false
       })
     } else {
       console.log('error submit!', fields)
