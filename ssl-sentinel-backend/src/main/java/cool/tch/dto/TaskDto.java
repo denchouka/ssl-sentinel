@@ -1,6 +1,7 @@
 package cool.tch.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import cool.tch.annotations.BeforeThanTargetDate;
 import cool.tch.annotations.FutureOrPresentDay;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -16,6 +17,7 @@ import java.util.Date;
  * @date 2024/11/29 20:07
  */
 @Data
+@BeforeThanTargetDate(message = "提醒日期必须早于过期日期", checkedField = "date", targetFields = {"ddl"})
 public class TaskDto implements Serializable {
 
     private static final long serialVersionUID = 3490539871833448081L;
