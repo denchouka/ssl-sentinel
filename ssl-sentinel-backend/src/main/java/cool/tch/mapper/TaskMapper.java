@@ -1,6 +1,6 @@
 package cool.tch.mapper;
 
-import cool.tch.dto.TaskDto;
+import cool.tch.entity.Task;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -11,5 +11,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface TaskMapper {
 
-    Integer addTask(TaskDto taskDto);
+    void addTask(Task task);
 }
