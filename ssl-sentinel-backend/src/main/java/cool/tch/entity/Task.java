@@ -42,6 +42,8 @@ public class Task implements Serializable {
 
     private String remark;
 
+    private int status;
+
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 

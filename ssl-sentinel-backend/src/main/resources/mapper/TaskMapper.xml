@@ -3,9 +3,8 @@
 
 <mapper namespace="cool.tch.mapper.TaskMapper">
 
-    <select id="addTask" resultType="Integer">
-        insert into task
-        <trim prefix="(" suffix=")" suffixOverrides=",">
+    <select id="addTask" parameterType="cool.tch.entity.Task">
+        insert into task (
             domain_name,
             application_platform,
             usage_platform,
@@ -14,10 +13,11 @@
             date,
             email,
             content,
-            <if test="remark != null">remark</if>
-        </trim>
-        values
-        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="remark != null">
+                remark,
+            </if>
+            status
+        ) values (
             #{domainName},
             #{applicationPlatform},
             #{usagePlatform},
@@ -26,8 +26,11 @@
             #{date},
             #{email},
             #{content},
-            <if test="remark != null">#{remark}</if>
-        </trim>
+            <if test="remark != null">
+                #{remark},
+            </if>
+            #{status}
+        )
     </select>
 
 </mapper>
