@@ -28,6 +28,11 @@ public class Constant {
     public static final String REQUEST_URL_LOGIN = "/login";
 
     /**
+     * 请求的url:logout
+     */
+    public static final String REQUEST_URL_LOGOUT = "/logout";
+
+    /**
      * 请求头 Content-Type
      */
     public static final String REQUEST_HEADER_CONTENT_TYPE = "content-type";
