@@ -36,8 +36,8 @@ public class CustomInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        // 登录的url可直接访问
-        if (StringUtils.equals(REQUEST_URL_LOGIN, request.getRequestURI())) {
+        // 登录或退出 的url可直接访问
+        if (StringUtils.equals(REQUEST_URL_LOGIN, request.getRequestURI()) || StringUtils.equals(REQUEST_URL_LOGOUT, request.getRequestURI())) {
             return true;
         }
 
