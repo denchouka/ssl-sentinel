@@ -8,6 +8,8 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import cool.tch.exception.BusinessException;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.Date;
@@ -21,12 +23,13 @@ import static cool.tch.common.Constant.*;
  * @description Token工具类
  * @date 2024/10/26 21:07
  */
+@Component
 public class TokenUtils {
 
     /**
      * 过期token的黑名单
      */
-        private static final ConcurrentHashMap<String, Revoke> blackList = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, Long> blackList = new ConcurrentHashMap<>();
 
     /**
      * 生成token
@@ -106,19 +109,22 @@ public class TokenUtils {
      * @param token 要失效的token
      */
     public static void revokeToken(String token) {
+        // 如果已经失效直接返回(在拦截器里不对退出登录请求的token做校验)
+        if (verify(token)) {
+            return;
+        }
+
         // token先解密
         String decrypt = SecureUtils.decrypt(token);
         DecodedJWT decode = JWT.decode(decrypt);
 
         // 获取token的jti
         String jti = decode.getId();
-        // 获取token payload部分的time和exp
-        Long time = decode.getClaim("time").asLong();
+        // 获取token的失效时间
         Long exp = decode.getClaim(RegisteredClaims.EXPIRES_AT).asLong();
 
-        Revoke revoke = new Revoke(time, exp);
         // 加入到黑名单，定时任务清除
-        blackList.put(jti, revoke);
+        blackList.put(jti, exp);
     }
 
     /**
@@ -135,28 +141,13 @@ public class TokenUtils {
     }
 
     /**
-     * 内部类，失效token的时间戳和过期时间
+     * 定时清理手动失效的token
      */
-    private static class Revoke {
-
-        // 失效token的时间戳
-        private Long time = null;
-
-        // 失效token的过期时间
-        private Long exp = null;
-
-        public Revoke(Long time, Long exp) {
-            this.time = time;
-            this.exp = exp;
-        }
-
-        /**
-         * 是否已经失效
-         * @return 是否已经失效
-         */
-        public boolean isRevoked() {
-            Instant now = Instant.now();
-            return time + exp >= now.toEpochMilli();
-        }
+    @Scheduled(cron = TOKEN_REVOKE_CRON)
+    public void cleanRevokeToken() {
+        // 清理已经失效的
+        long now = Instant.now().getEpochSecond();
+        blackList.entrySet().removeIf(entry -> entry.getValue() <= now);
     }
+
 }

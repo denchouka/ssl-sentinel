@@ -29,6 +29,11 @@ public class Constant {
     public static final long TOKEN_EXPIRE_DATE = 60 * 60;
 
     /**
+     * 失效token清理的cron表达式（每小时1次）
+     */
+    public static final String TOKEN_REVOKE_CRON = "0 0 * * * ?";
+
+    /**
      * 请求的url:login
      */
     public static final String REQUEST_URL_LOGIN = "/login";
