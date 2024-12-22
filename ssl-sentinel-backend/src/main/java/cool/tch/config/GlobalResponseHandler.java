@@ -40,9 +40,15 @@ public class GlobalResponseHandler implements ResponseBodyAdvice {
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
 
         HttpHeaders responseHeaders = response.getHeaders();
+        // 获取当前请求的url
+        String path = request.getURI().getPath();
+        // 用户退出的时候不返回新的token
+        if (StringUtils.equals(REQUEST_URL_LOGOUT, path)) {
+            return body;
+        }
+
         // 获取userName
         String userName = null;
-        String path = request.getURI().getPath();
         if (StringUtils.equals(REQUEST_URL_LOGIN, path)) {
             // 登录的时候，请求头中还没有"User-Name"，从响应头中获取
             userName = response.getHeaders().get(REQUEST_HEADER_USER_NAME).get(0);
