@@ -47,7 +47,7 @@ public class TokenUtils {
 
         try{
             // 生成token签名
-            return JWT.create()
+            String token = JWT.create()
                     .withHeader(header)
                     // 添加声明
                     .withClaim("username", username)
@@ -61,6 +61,9 @@ public class TokenUtils {
                     .withJWTId(IDUtils.generateJti())
                     // 密钥
                     .sign(Algorithm.HMAC256(TOKEN_SECRET_KEY));
+
+            // 返回前对生成的token加密
+            return SecureUtils.encrypt(token);
         } catch (Exception e) {
             throw new BusinessException("生成token失败");
         }
@@ -73,16 +76,17 @@ public class TokenUtils {
      * @return 校验结果
      */
     public static boolean verify(String token) {
-
         // 判空
         if (StringUtils.isBlank(token)) {
             return false;
         }
 
+        // token解密
+        String decrypt = SecureUtils.decrypt(token);
         // 验证token有效性
         try{
             JWTVerifier verifier = JWT.require(Algorithm.HMAC256(TOKEN_SECRET_KEY)).build();
-            verifier.verify(token);
+            verifier.verify(decrypt);
             return true;
         } catch (JWTVerificationException e) {
             return false;
