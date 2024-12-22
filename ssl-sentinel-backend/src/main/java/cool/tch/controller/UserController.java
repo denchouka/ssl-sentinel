@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static cool.tch.common.Constant.*;
@@ -31,8 +32,10 @@ public class UserController {
     }
 
     @GetMapping(REQUEST_URL_LOGOUT)
-    public ResponseResult logout() {
-        return userService.logout();
+    public ResponseResult logout(HttpServletRequest request) {
+        // 获取token
+        String token = request.getHeader(REQUEST_HEADER_ACCESS_TOKEN);
+        return userService.logout(token);
     }
 
 

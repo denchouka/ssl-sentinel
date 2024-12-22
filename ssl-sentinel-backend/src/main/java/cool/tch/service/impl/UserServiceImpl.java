@@ -7,6 +7,7 @@ import cool.tch.mapper.UserMapper;
 import cool.tch.service.UserService;
 import cool.tch.util.SecureUtils;
 import cool.tch.util.GoogleAuthenticator;
+import cool.tch.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -41,7 +42,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseResult logout() {
+    public ResponseResult logout(String token) {
+        // 手动失效token
+        TokenUtils.revokeToken(token);
         return ResponseResult.success("用户退出登录成功");
     }
 }

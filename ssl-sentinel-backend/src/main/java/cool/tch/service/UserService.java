@@ -19,7 +19,8 @@ public interface UserService {
 
     /**
      * 用户退出
+     * @param token 请求的token
      * @return
      */
-    ResponseResult logout();
+    ResponseResult logout(String token);
 }
