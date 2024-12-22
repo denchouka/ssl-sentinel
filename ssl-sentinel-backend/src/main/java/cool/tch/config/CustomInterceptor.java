@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 import static cool.tch.common.Constant.*;
 import static cool.tch.common.ResponseCode.HTTP_UNAUTHORIZED;
@@ -36,8 +37,8 @@ public class CustomInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        // 登录或退出 的url可直接访问
-        if (StringUtils.equals(REQUEST_URL_LOGIN, request.getRequestURI()) || StringUtils.equals(REQUEST_URL_LOGOUT, request.getRequestURI())) {
+        // 不需要校验token的请求可直接访问
+        if (Arrays.stream(REQUEST_URL_NO_VERIFY).anyMatch(url -> url.equals(request.getRequestURI()))) {
             return true;
         }
 
