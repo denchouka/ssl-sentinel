@@ -37,6 +37,11 @@ public class UserServiceImpl implements UserService {
         Assert.isTrue(checkCode, "MFA动态码已失效或错误!");
 
         // 登录成功
-        return ResponseResult.success();
+        return ResponseResult.success("用户登录成功");
+    }
+
+    @Override
+    public ResponseResult logout() {
+        return ResponseResult.success("用户退出登录成功");
     }
 }

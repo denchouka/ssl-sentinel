@@ -16,4 +16,10 @@ public interface UserService {
      * @return
      */
     ResponseResult login(LoginDto loginDto);
+
+    /**
+     * 用户退出
+     * @return
+     */
+    ResponseResult logout();
 }

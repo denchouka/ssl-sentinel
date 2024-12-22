@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
-import static cool.tch.common.Constant.ACCESS_CONTROL_EXPOSE_HEADERS;
-import static cool.tch.common.Constant.REQUEST_HEADER_USER_NAME;
+import static cool.tch.common.Constant.*;
 
 /**
  * @author denchouka
@@ -23,12 +22,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/login")
+    @PostMapping(REQUEST_URL_LOGIN)
     public ResponseResult login(@Validated @RequestBody LoginDto loginDto, HttpServletResponse response) {
         // 登录时请求头中没有"User-Name"，为了能在拦截器中获取到username，添加到响应头中
         response.addHeader(ACCESS_CONTROL_EXPOSE_HEADERS,REQUEST_HEADER_USER_NAME);
         response.setHeader(REQUEST_HEADER_USER_NAME, loginDto.getUsername());
         return userService.login(loginDto);
+    }
+
+    @GetMapping(REQUEST_URL_LOGOUT)
+    public ResponseResult logout() {
+        return userService.logout();
     }
 
 
