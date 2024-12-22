@@ -2,8 +2,10 @@ package cool.tch.util;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.RegisteredClaims;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import cool.tch.exception.BusinessException;
 import org.apache.commons.lang3.StringUtils;
 
@@ -24,7 +26,7 @@ public class TokenUtils {
     /**
      * 过期token的黑名单
      */
-    private final ConcurrentHashMap<String, Long> blackList = new ConcurrentHashMap<>();
+        private static final ConcurrentHashMap<String, Revoke> blackList = new ConcurrentHashMap<>();
 
     /**
      * 生成token
@@ -83,6 +85,12 @@ public class TokenUtils {
 
         // token解密
         String decrypt = SecureUtils.decrypt(token);
+
+        // 判断是否被手动失效过（必须先解密）
+        if (isTokenExpired(decrypt)) {
+            return false;
+        }
+
         // 验证token有效性
         try{
             JWTVerifier verifier = JWT.require(Algorithm.HMAC256(TOKEN_SECRET_KEY)).build();
@@ -90,6 +98,65 @@ public class TokenUtils {
             return true;
         } catch (JWTVerificationException e) {
             return false;
+        }
+    }
+
+    /**
+     * 退出登录的时候手动失效token
+     * @param token 要失效的token
+     */
+    public static void revokeToken(String token) {
+        // token先解密
+        String decrypt = SecureUtils.decrypt(token);
+        DecodedJWT decode = JWT.decode(decrypt);
+
+        // 获取token的jti
+        String jti = decode.getId();
+        // 获取token payload部分的time和exp
+        Long time = decode.getClaim("time").asLong();
+        Long exp = decode.getClaim(RegisteredClaims.EXPIRES_AT).asLong();
+
+        Revoke revoke = new Revoke(time, exp);
+        // 加入到黑名单，定时任务清除
+        blackList.put(jti, revoke);
+    }
+
+    /**
+     * 校验token时判断token是否失效
+     * @param token 要判断的token
+     */
+    private static boolean isTokenExpired(String token) {
+        DecodedJWT decode = JWT.decode(token);
+
+        // 获取token的jti
+        String jti = decode.getId();
+        // 只要在黑名单里就是手动失效的
+        return blackList.containsKey(jti);
+    }
+
+    /**
+     * 内部类，失效token的时间戳和过期时间
+     */
+    private static class Revoke {
+
+        // 失效token的时间戳
+        private Long time = null;
+
+        // 失效token的过期时间
+        private Long exp = null;
+
+        public Revoke(Long time, Long exp) {
+            this.time = time;
+            this.exp = exp;
+        }
+
+        /**
+         * 是否已经失效
+         * @return 是否已经失效
+         */
+        public boolean isRevoked() {
+            Instant now = Instant.now();
+            return time + exp >= now.toEpochMilli();
         }
     }
 }
