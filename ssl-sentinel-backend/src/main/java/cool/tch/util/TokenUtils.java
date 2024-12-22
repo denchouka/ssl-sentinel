@@ -58,7 +58,7 @@ public class TokenUtils {
                     // 1H后过期
                     .withExpiresAt(Date.from(Instant.now().plusSeconds(TOKEN_EXPIRE_DATE)))
                     // 指定jti
-                    .withJWTId(IDUtils.generateID(username, ip))
+                    .withJWTId(IDUtils.generateJti())
                     // 密钥
                     .sign(Algorithm.HMAC256(TOKEN_SECRET_KEY));
         } catch (Exception e) {
