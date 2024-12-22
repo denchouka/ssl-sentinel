@@ -4,13 +4,13 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import cool.tch.common.Constant;
 import cool.tch.exception.BusinessException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static cool.tch.common.Constant.*;
 
@@ -20,6 +20,11 @@ import static cool.tch.common.Constant.*;
  * @date 2024/10/26 21:07
  */
 public class TokenUtils {
+
+    /**
+     * 过期token的黑名单
+     */
+    private final ConcurrentHashMap<String, Long> blackList = new ConcurrentHashMap<>();
 
     /**
      * 生成token
@@ -52,6 +57,8 @@ public class TokenUtils {
                     .withClaim("salt", TOKEN_SECRET_SALT)
                     // 1H后过期
                     .withExpiresAt(Date.from(Instant.now().plusSeconds(TOKEN_EXPIRE_DATE)))
+                    // 指定jti
+                    .withJWTId(IDUtils.generateID(username, ip))
                     // 密钥
                     .sign(Algorithm.HMAC256(TOKEN_SECRET_KEY));
         } catch (Exception e) {
