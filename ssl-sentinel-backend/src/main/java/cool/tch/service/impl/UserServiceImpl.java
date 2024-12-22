@@ -5,7 +5,7 @@ import cool.tch.dto.LoginDto;
 import cool.tch.entity.User;
 import cool.tch.mapper.UserMapper;
 import cool.tch.service.UserService;
-import cool.tch.util.EncryptUtils;
+import cool.tch.util.SecureUtils;
 import cool.tch.util.GoogleAuthenticator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
         Assert.notNull(user, "用户不存在!");
 
         // 校验密码
-        boolean validate = EncryptUtils.validate(loginDto.getPassword(), user.getPassword());
+        boolean validate = SecureUtils.validate(loginDto.getPassword(), user.getPassword());
         Assert.isTrue(validate, "密码错误!");
 
         // 验证MFA动态码
