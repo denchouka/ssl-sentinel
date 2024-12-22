@@ -5,20 +5,58 @@
       <h3 class="title">SSL Sentinel</h3>
     </div>
     <div class="right">
-      <el-button round class="logout1" type="info">退出登录</el-button>
+      <el-button round type="info" :loading="loading" @click="toLogout">退出登录</el-button>
     </div>
   </div>
 </template>
 
-<script>
-import { ElButton } from 'element-plus';
+<script lang="ts" setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { logout } from '@/api/index'
+import { ElMessageBox } from 'element-plus'
 
-export default {
-  name: 'Header',
-  components: {
-    ElButton
-  }
+// 定义loading状态
+var loading = ref(false)
+
+// 获取路由器实例
+const router = useRouter()
+
+/**
+ * 退出登录
+ */
+const toLogout = () => {
+  loading.value = true
+
+  // 弹框提醒
+  ElMessageBox.confirm(
+    '确定要退出登录吗',
+    '提示',
+    {
+      confirmButtonText: '确定退出',
+      cancelButtonText: '取消',
+      type: 'warning',
+      draggable: true
+    }
+  )
+  .then(() => {
+    // 退出
+    logout().then(() => {
+      // 清空localStorage
+      localStorage.clear()
+
+      loading.value = false
+
+      // 跳转登录页
+      window.location.href = '/'
+    })
+  })
+  .catch(() => {
+    // 取消
+    loading.value = false
+  })
 }
+
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
