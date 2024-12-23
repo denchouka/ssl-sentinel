@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 
+// user
 export function login(data) {
   return request({
     url: '/login',
@@ -13,6 +14,8 @@ export function logout() {
     method: 'get'
   })
 }
+
+//task
 export function addTask(data) {
   return request({
     url: '/task/add',
@@ -20,7 +23,13 @@ export function addTask(data) {
     data
   })
 }
-
+export function taskList(params) {
+  return request({
+    url: '/task/list',
+    method: 'get',
+    params: params
+  })
+}
 
 export function changeMfaCode(data) {
   return request({
