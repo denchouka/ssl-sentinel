@@ -76,9 +76,9 @@ public class TokenUtils {
 
 
     /**
-     * 校验token
+     * 校验token有效性
      * @param token 请求头中携带的token
-     * @return 校验结果
+     * @return 校验不通过
      */
     public static boolean verify(String token) {
         // 判空
@@ -109,8 +109,8 @@ public class TokenUtils {
      * @param token 要失效的token
      */
     public static void revokeToken(String token) {
-        // 如果已经失效直接返回(在拦截器里不对退出登录请求的token做校验)
-        if (verify(token)) {
+        // 如果校验不通过直接返回(在拦截器里不对退出登录请求的token做校验)
+        if (!verify(token)) {
             return;
         }
 
