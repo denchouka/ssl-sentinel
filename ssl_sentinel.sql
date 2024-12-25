@@ -20,7 +20,7 @@ CREATE TABLE `user`  (
 DROP TABLE IF EXISTS `task`;
 CREATE TABLE `task`  (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `domain_name` VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '域名',
+  `domain_name` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '域名',
   `application_platform` VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '申请平台',
   `usage_platform` VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '使用平台',
   `purpose` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用途',

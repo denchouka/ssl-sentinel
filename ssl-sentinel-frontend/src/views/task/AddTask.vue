@@ -14,8 +14,8 @@
       <el-form-item label="域名" prop="domainName">
         <el-input
           v-model="taskForm.domainName"
-          minlength="3"
-          maxlength="10"
+          minlength="4"
+          maxlength="20"
           show-word-limit
           placeholder="输入域名"
           clearable
@@ -176,7 +176,7 @@ const taskForm = reactive<TaskForm>({
 const rules = reactive<FormRules<TaskForm>>({
   domainName: [
     { required: true, message: '请输入域名', trigger: 'blur' },
-    { min: 3, max: 10, message: 'Length should be 3 to 10', trigger: 'blur' }
+    { min: 4, max: 20, message: 'Length should be 4 to 20', trigger: 'blur' }
   ],
   applicationPlatform: [
     { required: true, message: '请输入申请平台', trigger: 'blur' },
