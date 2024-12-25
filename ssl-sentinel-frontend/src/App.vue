@@ -81,7 +81,7 @@ export default {
     position: fixed;
     height: 100%;
     width: 100%;
-    background-color: rgb(249, 250, 252);
+    background-color: white;
 
     .header {
       height: 10%;
@@ -106,7 +106,7 @@ export default {
 
     .el-menu {
       border: none;
-      background-color: rgb(249, 250, 252);
+      background-color: white;
     }
 
     .middle {
