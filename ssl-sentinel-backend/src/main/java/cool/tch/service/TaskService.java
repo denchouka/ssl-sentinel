@@ -2,6 +2,7 @@ package cool.tch.service;
 
 import cool.tch.common.ResponseResult;
 import cool.tch.dto.TaskDto;
+import cool.tch.dto.TaskSearchDto;
 
 /**
  * @author denchouka
@@ -19,8 +20,8 @@ public interface TaskService {
 
     /**
      * 查询任务
-     * @param taskDto
+     * @param taskSearchDto
      * @return
      */
-    ResponseResult list(TaskDto taskDto);
+    ResponseResult list(TaskSearchDto taskSearchDto);
 }

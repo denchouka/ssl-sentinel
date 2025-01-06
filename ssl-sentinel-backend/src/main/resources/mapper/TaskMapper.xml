@@ -33,4 +33,32 @@
         )
     </select>
 
+    <select id="list" resultType="cool.tch.vo.TaskSearchVO">
+        select
+            id,
+            domain_name,
+            application_platform,
+            usage_platform,
+            purpose,
+            ddl,
+            date,
+            email,
+            content,
+            remark,
+            status
+        from
+            task
+        <where>
+            <if test="domainName != null and domainName != ''">
+                AND domain_name like CONCAT('%', #{domainName}, '%')
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+            <if test="ddl != null">
+                AND ddl = #{ddl}
+            </if>
+        </where>
+    </select>
+
 </mapper>
