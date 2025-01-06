@@ -106,6 +106,12 @@
             <artifactId>hutool-crypto</artifactId>
             <version>5.8.29</version>
         </dependency>
+        <!--PageHelper-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.4.1</version>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
