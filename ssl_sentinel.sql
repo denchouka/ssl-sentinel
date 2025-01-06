@@ -29,7 +29,7 @@ CREATE TABLE `task`  (
   `email` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '邮箱地址',
   `content` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '提醒内容',
   `remark` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '备注',
-  `status` INT(1) NOT NULL DEFAULT 0 COMMENT '状态（0:未执行、1:执行中、2:执行完成）',
+  `status` INT(1) NOT NULL DEFAULT 0 COMMENT '状态（1:未执行、2:执行中、3:执行完成）',
   `create_time` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` DATETIME(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE

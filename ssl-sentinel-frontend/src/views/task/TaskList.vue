@@ -97,7 +97,7 @@
           layout="prev, pager, next"
           :page-sizes="[10]"
           :page-size="pagination.pageSize"
-          :current-page="pagination.currentPage"
+          :current-page="pagination.pageNum"
           :total="pagination.total"
           @current-change="handleCurrentChange"
           @prev-click="handlePrevClick"
@@ -118,15 +118,15 @@ var loading = ref(false)
 
 const options = [
   {
-    value: 0,
+    value: 1,
     label: '未执行',
   },
   {
-    value: 1,
+    value: 2,
     label: '执行中',
   },
   {
-    value: 2,
+    value: 3,
     label: '执行完成',
   }
 ]
@@ -152,7 +152,7 @@ const taskData = [
 ]
 
 interface Pagination {
-  currentPage: number;
+  pageNum: number;
   pageSize: number;
   total: number;
 }
@@ -161,10 +161,10 @@ interface Pagination {
 const pagination = reactive<Pagination>({
   // 总条目数
   total: 50,
-  // 定义可选的每页显示数量
+  // 每页显示数量
   pageSize: 10,
-  // 当前页数
-  currentPage: 2
+  // 页码
+  pageNum: 2
 })
 
 // 定义任务表单的数据结构

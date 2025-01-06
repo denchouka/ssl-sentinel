@@ -12,17 +12,17 @@ public enum TaskStatusEnum {
     /**
      * 未执行
      */
-    NOT_STARTED(0, "未执行"),
+    NOT_STARTED(1, "未执行"),
 
     /**
      * 执行中
      */
-    IN_PROGRESS(1, "执行中"),
+    IN_PROGRESS(2, "执行中"),
 
     /**
      * 执行完成
      */
-    COMPLETED(2, "执行完成");
+    COMPLETED(3, "执行完成");
 
     private final int status;
 
