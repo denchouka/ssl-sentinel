@@ -59,7 +59,7 @@ public class TaskServiceImpl implements TaskService {
         }
 
         // 设置分页参数
-        PageHelper.startPage(2, 1);
+        PageHelper.startPage(taskSearchDto.getPageNum(), taskSearchDto.getPageSize());
 
         // 执行查询
         List<TaskSearchVO> taskList = taskMapper.list(taskSearchDto.getDomainName(), taskSearchDto.getStatus(), taskSearchDto.getDdl());

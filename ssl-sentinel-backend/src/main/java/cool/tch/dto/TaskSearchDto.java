@@ -1,6 +1,7 @@
 package cool.tch.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import cool.tch.common.Page;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import java.util.Date;
  * @date 2024/12/25 23:37
  */
 @Data
-public class TaskSearchDto implements Serializable {
+public class TaskSearchDto extends Page implements Serializable {
 
     private static final long serialVersionUID = 3253421122061335306L;
 
