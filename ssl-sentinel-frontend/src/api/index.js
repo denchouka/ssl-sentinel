@@ -23,11 +23,11 @@ export function addTask(data) {
     data
   })
 }
-export function taskList(params) {
+export function taskList(data) {
   return request({
     url: '/task/list',
-    method: 'get',
-    params: params
+    method: 'post',
+    data
   })
 }
 
