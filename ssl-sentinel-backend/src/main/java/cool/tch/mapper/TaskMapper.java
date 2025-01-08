@@ -1,7 +1,6 @@
 package cool.tch.mapper;
 
 import cool.tch.entity.Task;
-import cool.tch.vo.TaskSearchVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,5 +17,5 @@ public interface TaskMapper {
 
     void addTask(Task task);
 
-    List<TaskSearchVO> list(@Param("domainName") String domainName, @Param("status") Integer status, @Param("ddl") Date ddl);
+    List<Task> list(@Param("domainName") String domainName, @Param("status") Integer status, @Param("ddl") Date ddl);
 }
