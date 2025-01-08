@@ -2,9 +2,9 @@ package cool.tch.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author denchouka
@@ -13,6 +13,7 @@ import java.util.Date;
  */
 @AllArgsConstructor
 @Data
+@NoArgsConstructor
 public class TaskSearchVO implements Serializable {
 
     private static final long serialVersionUID = 6379448169136101895L;
@@ -27,9 +28,9 @@ public class TaskSearchVO implements Serializable {
 
     private String purpose;
 
-    private Date ddl;
+    private String ddl;
 
-    private Date date;
+    private String date;
 
     private String email;
 
