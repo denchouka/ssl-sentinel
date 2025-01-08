@@ -25,7 +25,7 @@ public class TaskController {
         return taskService.addTask(taskDto);
     }
 
-    @GetMapping("/list")
+    @PostMapping("/list")
     public ResponseResult list(@RequestBody TaskSearchDto taskSearchDto) {
         return taskService.list(taskSearchDto);
     }
