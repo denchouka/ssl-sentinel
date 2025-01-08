@@ -109,7 +109,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { formatDate } from '@/utils/index'
 import { taskList } from '@/api/index'
 
@@ -136,20 +136,7 @@ const indexMethod = (index: number) => {
 }
 
 // 表格的数据
-const taskData = [
-  {
-    domainName: '12345678901234567890',
-    applicationPlatform: '阿里云阿里云阿里云阿',
-    usagePlatform: '腾讯云腾讯云腾讯云腾',
-    purpose: '用途用途用途用途用途',
-    ddl: '2016-05-01',
-    date: '2016-05-03',
-    email: '12345678901234567890123456789012345678901234567890',
-    content: '提醒内容提',
-    remark: '备注备注备注备注备注',
-    status: 2
-  }
-]
+var taskData = []
 
 interface Pagination {
   pageNum: number;
@@ -158,13 +145,13 @@ interface Pagination {
 }
 
 // 分页的属性
-const pagination = reactive<Pagination>({
-  // 总条目数
-  total: 50,
-  // 每页显示数量
+var pagination = reactive<Pagination>({
+  // 页码(默认)
+  pageNum: 1,
+  // 每页显示数量(默认)
   pageSize: 10,
-  // 页码
-  pageNum: 2
+  // 总条目数
+  total: 0
 })
 
 // 定义任务表单的数据结构
@@ -180,6 +167,39 @@ const taskForm = reactive<TaskForm>({
   status: '',
   ddl: ''
 })
+
+/**
+ * 生命周期函数，组件完成初始渲染
+ */
+onMounted(() => {
+  // 无参数查询任务列表
+  fetchTaskList(pagination.pageNum, pagination.pageSize)
+})
+
+/**
+ * 查询任务列表
+ * @param data 请求参数
+ */
+const fetchTaskList = (pageNum, pageSize) => {
+  const data = {
+    pageNum: pageNum,
+    pageSize: pageSize,
+    domainName: taskForm.domainName,
+    status: taskForm.status,
+    ddl: taskForm.ddl
+  }
+
+  taskList(data).then(res => {
+    // 表格的数据
+    taskData = res.data.list
+    // 分页参数
+    pagination.pageNum = res.data.pageNum
+    // 每页显示数量
+    pagination.pageSize = res.data.pageSize
+    // 总条目数
+    pagination.total = res.data.total
+  })
+}
 
 /**
  * 检索
@@ -229,7 +249,7 @@ const fetchData = async () => {
 // 处理当前页面变化
 const handleCurrentChange = (val: number) => {
   console.log(`处理当前页面变化, 目标页: ${val}`)
-  pagination.currentPage = val
+  pagination.pageNum = val
   fetchData()
 }
 
