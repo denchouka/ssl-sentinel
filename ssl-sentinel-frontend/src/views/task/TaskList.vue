@@ -82,9 +82,10 @@
           </el-table-column>
           <el-table-column header-align="center" align="center" prop="status" label="执行状态">
             <template #default="scope">
-              <el-tag v-if="scope.row.status == 1" type="primary">执行中</el-tag>
-              <el-tag v-else-if="scope.row.status == 2" type="success">执行完成</el-tag>
-              <el-tag v-else type="info">未执行</el-tag>
+              <el-tag v-if="scope.row.status == 1" type="info">未执行</el-tag>
+              <el-tag v-else-if="scope.row.status == 2" type="primary">执行中</el-tag>
+              <el-tag v-else-if="scope.row.status == 3" type="success">执行完成</el-tag>
+              <el-tag v-else type="danger">未知状态</el-tag>
             </template>
           </el-table-column>
         </el-table>
@@ -188,16 +189,12 @@ const fetchTaskList = (pageNum, pageSize) => {
     pageSize: pageSize,
     domainName: taskForm.domainName,
     status: taskForm.status,
-    ddl: taskForm.ddl
+    ddl: formatDate(taskForm.ddl)
   }
-
+  console.log(data)
   taskList(data).then(res => {
     // 表格的数据
     taskData = res.data.list
-    // 分页参数
-    pagination.pageNum = res.data.pageNum
-    // 每页显示数量
-    pagination.pageSize = res.data.pageSize
     // 总条目数
     pagination.total = res.data.total
 
@@ -213,22 +210,8 @@ const fetchTaskList = (pageNum, pageSize) => {
  * 检索
  */
 const toSearch = () => {
-  console.log('检索')
-  loading.value = true
-  const searchTaskDto = {
-    domainName: taskForm.domainName,
-    status: taskForm.status,
-    ddl: formatDate(taskForm.ddl)
-  }
-  console.log(searchTaskDto)
-  taskList(searchTaskDto).then(res => {
-    // 获取查询的结果
-
-
-    loading.value = false
-  }).catch(() => {
-    loading.value = false
-  })
+  // 无参数查询任务列表
+  fetchTaskList(pagination.pageNum, pagination.pageSize)
 }
 
 /**
