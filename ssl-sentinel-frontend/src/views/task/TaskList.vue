@@ -181,6 +181,8 @@ onMounted(() => {
  * @param data 请求参数
  */
 const fetchTaskList = (pageNum, pageSize) => {
+  // 开始loading
+  loading.value = true
   const data = {
     pageNum: pageNum,
     pageSize: pageSize,
@@ -198,6 +200,12 @@ const fetchTaskList = (pageNum, pageSize) => {
     pagination.pageSize = res.data.pageSize
     // 总条目数
     pagination.total = res.data.total
+
+    // 查询结束，loading结束
+    loading.value = false
+  }).catch(() => {
+    // loading结束
+    loading.value = false
   })
 }
 
