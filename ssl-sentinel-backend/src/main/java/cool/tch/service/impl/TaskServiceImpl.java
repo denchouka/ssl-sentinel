@@ -10,11 +10,13 @@ import cool.tch.enums.TaskStatusEnum;
 import cool.tch.mapper.TaskMapper;
 import cool.tch.service.TaskService;
 import cool.tch.util.BeanCopyUtils;
+import cool.tch.util.DateUtils;
 import cool.tch.vo.TaskSearchVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,11 +64,25 @@ public class TaskServiceImpl implements TaskService {
         PageHelper.startPage(taskSearchDto.getPageNum(), taskSearchDto.getPageSize());
 
         // 执行查询
-        List<TaskSearchVO> taskList = taskMapper.list(taskSearchDto.getDomainName(), taskSearchDto.getStatus(), taskSearchDto.getDdl());
+        List<Task> taskList = taskMapper.list(taskSearchDto.getDomainName(), taskSearchDto.getStatus(), taskSearchDto.getDdl());
 
         // 使用PageInfo包装查询的结果
-        PageInfo<TaskSearchVO> pageInfo = new PageInfo<>(taskList);
+        PageInfo<Task> pageInfo = new PageInfo<>(taskList);
 
-        return ResponseResult.success(pageInfo);
+        // Task -> TaskSearchVO
+        List<TaskSearchVO> searchVOS = new ArrayList<>();
+        taskList.forEach(task -> {
+            TaskSearchVO searchVO = BeanCopyUtils.copyObject(task, TaskSearchVO.class);
+            // 日期格式化
+            searchVO.setDate(DateUtils.parseDate(task.getDate()));
+            searchVO.setDdl(DateUtils.parseDate(task.getDdl()));
+            searchVOS.add(searchVO);
+        });
+
+        // 创建一个新的PageInfo实例，保持原有的分页信息，但使用转换后的VO列表
+        PageInfo<TaskSearchVO> voPageInfo = new PageInfo<>(searchVOS);
+        voPageInfo.setTotal(pageInfo.getTotal());
+
+        return ResponseResult.success(voPageInfo);
     }
 }
