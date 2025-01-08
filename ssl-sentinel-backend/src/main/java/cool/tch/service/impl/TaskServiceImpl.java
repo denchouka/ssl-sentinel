@@ -81,6 +81,8 @@ public class TaskServiceImpl implements TaskService {
 
         // 创建一个新的PageInfo实例，保持原有的分页信息，但使用转换后的VO列表
         PageInfo<TaskSearchVO> voPageInfo = new PageInfo<>(searchVOS);
+        voPageInfo.setPageNum(pageInfo.getPageNum());
+        voPageInfo.setPageSize(pageInfo.getPageSize());
         voPageInfo.setTotal(pageInfo.getTotal());
 
         return ResponseResult.success(voPageInfo);
