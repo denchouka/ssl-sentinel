@@ -20,6 +20,7 @@
               v-model="taskForm.status"
               placeholder="选择任务状态"
               style="width: 240px"
+              clearable
             >
               <el-option
                 v-for="item in options"
@@ -173,8 +174,8 @@ const taskForm = reactive<TaskForm>({
  * 生命周期函数，组件完成初始渲染
  */
 onMounted(() => {
-  // 无参数查询任务列表
-  fetchTaskList(pagination.pageNum, pagination.pageSize)
+  // 无参数查询任务列表(默认是第1页)
+  fetchTaskList(1, pagination.pageSize)
 })
 
 /**
@@ -195,6 +196,8 @@ const fetchTaskList = (pageNum, pageSize) => {
   taskList(data).then(res => {
     // 表格的数据
     taskData = res.data.list
+    // 页码
+    pagination.pageNum = res.data.pageNum
     // 总条目数
     pagination.total = res.data.total
 
@@ -210,8 +213,8 @@ const fetchTaskList = (pageNum, pageSize) => {
  * 检索
  */
 const toSearch = () => {
-  // 无参数查询任务列表
-  fetchTaskList(pagination.pageNum, pagination.pageSize)
+  // 无参数查询任务列表(默认是第1页)
+  fetchTaskList(1, pagination.pageSize)
 }
 
 /**
@@ -231,29 +234,24 @@ const reset = () => {
   Object.assign(taskForm, initTaskFormData)
 }
 
-// 模拟数据获取函数
-const fetchData = async () => {
-  // 在这里实现实际的数据获取逻辑
-  console.log('Fetching data...')
-}
-
 // 处理当前页面变化
 const handleCurrentChange = (val: number) => {
   console.log(`处理当前页面变化, 目标页: ${val}`)
-  pagination.pageNum = val
-  fetchData()
+  fetchTaskList(val, pagination.pageSize)
 }
 
 // 上一页点击事件
 const handlePrevClick = (val: number) => {
   console.log(`上一页, 当前页: ${val}`)
   // 可选：特定逻辑
+  fetchTaskList(val - 1, pagination.pageSize)
 }
 
 // 下一页点击事件
 const handleNextClick = (val: number) => {
   console.log(`下一页, 当前页: ${val}`)
   // 可选：特定逻辑
+  fetchTaskList(val + 1, pagination.pageSize)
 }
 </script>
 
