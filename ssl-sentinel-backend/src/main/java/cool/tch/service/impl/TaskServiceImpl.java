@@ -106,8 +106,7 @@ public class TaskServiceImpl implements TaskService {
             // 今天 < ddl : 执行中     今天 >= ddl : 执行完成
             int newStatus = DateUtils.isTodayBeforeThanDate(ddl) ? TaskStatusEnum.IN_PROGRESS.getStatus() : TaskStatusEnum.COMPLETED.getStatus();
             // 更新db
-            System.out.println("id = " + task.getId() + " -- 提醒日期 = " + DateUtils.parseDate(task.getDate()) + " -- ddl = " + DateUtils.parseDate(ddl) + " -- status = " + newStatus);
-
+            taskMapper.updateTaskStatusById(task.getId(), newStatus);
         });
     }
 }

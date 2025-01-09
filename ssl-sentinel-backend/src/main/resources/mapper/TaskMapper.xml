@@ -86,5 +86,13 @@
             ddl
         ]]>
     </select>
+    
+    <update id="updateTaskStatusById">
+        update
+            task
+        set
+            status = #{status}
+        where id = #{id}
+    </update>
 
 </mapper>
