@@ -2,12 +2,11 @@ package cool.tch.validator;
 
 import cool.tch.annotations.BeforeThanTargetDate;
 import cool.tch.exception.BusinessException;
+import cool.tch.util.DateUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.lang.reflect.Field;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 
 /**
@@ -43,7 +42,7 @@ public class BeforeThanTargetDateValidator implements ConstraintValidator<Before
                 Date targetDate = getDateByFieldName(object, targetField);
 
                 // 作比较
-                if (!isBefore(checkedDate, targetDate)) {
+                if (!DateUtils.isBefore(checkedDate, targetDate)) {
                     return false;
                 }
             }
@@ -67,25 +66,4 @@ public class BeforeThanTargetDateValidator implements ConstraintValidator<Before
             return (Date) field.get(object);
     }
 
-    /**
-     * 判断校验的日期是否早于target
-     * @param checked 校验的日期
-     * @param target 注解指定的日期
-     * @return
-     */
-    private boolean isBefore(Date checked, Date target) {
-        // 只要有一个是null，就直接返回true（null会通过@NotNull注解校验）
-        if (checked == null || target == null) {
-            return true;
-        }
-
-        // 指定时区为Asia/Shanghai
-        ZoneId shanghaiZone = ZoneId.of("Asia/Shanghai");
-        // 要校验的日期转换为LocalDate
-        LocalDate currentDate = checked.toInstant().atZone(shanghaiZone).toLocalDate();
-        // 要校验的日期转换为LocalDate
-        LocalDate targetDate = target.toInstant().atZone(shanghaiZone).toLocalDate();
-
-        return currentDate.isBefore(targetDate);
-    }
 }
