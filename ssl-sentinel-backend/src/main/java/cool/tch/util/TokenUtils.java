@@ -23,7 +23,6 @@ import static cool.tch.common.Constant.*;
  * @description Token工具类
  * @date 2024/10/26 21:07
  */
-@Component
 public class TokenUtils {
 
     /**
@@ -143,8 +142,7 @@ public class TokenUtils {
     /**
      * 定时清理手动失效的token
      */
-    @Scheduled(cron = TOKEN_REVOKE_CRON)
-    public void cleanRevokeToken() {
+    public static void cleanRevokeToken() {
         // 清理已经失效的
         long now = Instant.now().getEpochSecond();
         blackList.entrySet().removeIf(entry -> entry.getValue() <= now);
