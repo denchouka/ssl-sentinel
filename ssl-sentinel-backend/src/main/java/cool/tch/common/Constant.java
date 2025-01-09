@@ -116,4 +116,9 @@ public class Constant {
      * 跨域的响应报头
      */
     public static final String ACCESS_CONTROL_EXPOSE_HEADERS = "access-control-expose-headers";
+
+    /**
+     * 时区：Asia/Shanghai
+     */
+    public static final String ZONEID_ASIA_SHANGHAI = "Asia/Shanghai";
 }
