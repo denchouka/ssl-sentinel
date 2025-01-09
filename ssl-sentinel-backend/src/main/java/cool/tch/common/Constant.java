@@ -34,6 +34,11 @@ public class Constant {
     public static final String TOKEN_REVOKE_CRON = "0 0 * * * ?";
 
     /**
+     * 执行任务的cron表达式（每天凌晨1点）
+     */
+    public static final String EXECUTE_TASK_CROM = "0 0 1 * * ?";
+
+    /**
      * 请求的url:login
      */
     public static final String REQUEST_URL_LOGIN = "/login";
