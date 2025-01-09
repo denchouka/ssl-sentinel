@@ -11,12 +11,14 @@ import cool.tch.mapper.TaskMapper;
 import cool.tch.service.TaskService;
 import cool.tch.util.BeanCopyUtils;
 import cool.tch.util.DateUtils;
+import cool.tch.util.MailUtils;
 import cool.tch.vo.TaskSearchVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -86,5 +88,26 @@ public class TaskServiceImpl implements TaskService {
         voPageInfo.setTotal(pageInfo.getTotal());
 
         return ResponseResult.success(voPageInfo);
+    }
+
+    /**
+     * 执行任务
+     */
+    @Override
+    public void executeTask() {
+        // 查询所有未执行和执行中，且已到提醒日期的任务，按过期时间排序
+        List<Task> tasks = taskMapper.executeList(TaskStatusEnum.NOT_STARTED.getStatus(), TaskStatusEnum.IN_PROGRESS.getStatus());
+        tasks.forEach(task -> {
+            // 发邮件提醒
+            MailUtils.send(null, null, null);
+
+            // 修改任务状态
+            Date ddl = task.getDdl();
+            // 今天 < ddl : 执行中     今天 >= ddl : 执行完成
+            int newStatus = DateUtils.isTodayBeforeThanDate(ddl) ? TaskStatusEnum.IN_PROGRESS.getStatus() : TaskStatusEnum.COMPLETED.getStatus();
+            // 更新db
+            System.out.println("id = " + task.getId() + " -- 提醒日期 = " + DateUtils.parseDate(task.getDate()) + " -- ddl = " + DateUtils.parseDate(ddl) + " -- status = " + newStatus);
+
+        });
     }
 }

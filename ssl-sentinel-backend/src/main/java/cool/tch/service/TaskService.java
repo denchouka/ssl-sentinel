@@ -24,4 +24,9 @@ public interface TaskService {
      * @return
      */
     ResponseResult list(TaskSearchDto taskSearchDto);
+
+    /**
+     * 执行任务
+     */
+    void executeTask();
 }

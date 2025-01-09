@@ -18,4 +18,6 @@ public interface TaskMapper {
     void addTask(Task task);
 
     List<Task> list(@Param("domainName") String domainName, @Param("status") Integer status, @Param("ddl") Date ddl);
+
+    List<Task> executeList(@Param("notStarted") int notStarted, @Param("inProgress") int inProgress);
 }

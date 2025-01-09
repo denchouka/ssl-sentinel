@@ -63,4 +63,28 @@
             ddl
     </select>
 
+    <select id="executeList" resultType="cool.tch.entity.Task">
+        <![CDATA[
+        select
+            id,
+            domain_name,
+            application_platform,
+            usage_platform,
+            purpose,
+            ddl,
+            date,
+            email,
+            content,
+            remark,
+            status
+        from
+            task
+        where
+            status in (${notStarted}, ${inProgress})
+            and date <= curdate()
+        order by
+            ddl
+        ]]>
+    </select>
+
 </mapper>
