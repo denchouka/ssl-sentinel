@@ -40,11 +40,28 @@ public class DateUtils {
 
         // 指定时区为Asia/Shanghai
         ZoneId shanghaiZone = ZoneId.of(ZONEID_ASIA_SHANGHAI);
-        // date2转换为LocalDate
+        // date1转换为LocalDate
         LocalDate localDate1 = date1.toInstant().atZone(shanghaiZone).toLocalDate();
         // date2转换为LocalDate
         LocalDate localDate2 = date2.toInstant().atZone(shanghaiZone).toLocalDate();
 
         return localDate1.isBefore(localDate2);
+    }
+
+    /**
+     * 今天是否早于指定日期（不包括今天）
+     * @param date 指定日期
+     * @return 判断结果
+     */
+    public static boolean isTodayBeforeThanDate(Date date) {
+        // 指定时区为Asia/Shanghai
+        ZoneId shanghaiZone = ZoneId.of(ZONEID_ASIA_SHANGHAI);
+        // 获取当前日期
+        LocalDate today = LocalDate.now(shanghaiZone);
+
+        // date转换为LocalDate
+        LocalDate localDate = date.toInstant().atZone(shanghaiZone).toLocalDate();
+
+        return today.isBefore(localDate);
     }
 }
