@@ -3,7 +3,7 @@
 
 <mapper namespace="cool.tch.mapper.TaskMapper">
 
-    <select id="addTask" parameterType="cool.tch.entity.Task">
+    <insert id="addTask" parameterType="cool.tch.entity.Task">
         insert into task (
             domain_name,
             application_platform,
@@ -31,7 +31,7 @@
             </if>
             #{status}
         )
-    </select>
+    </insert>
 
     <select id="list" resultType="cool.tch.entity.Task">
         select
