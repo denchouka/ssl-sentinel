@@ -21,3 +21,10 @@ spring:
     min-evictable-idle-time-millis: 30000
     filters: stat,wall,log4j
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+#自定义线程池
+task:
+  executor:
+    core_pool_size: 10
+    max_pool_size: 200
+    queue_capacity: 1200
+    keep_alive_seconds: 60
