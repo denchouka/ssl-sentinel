@@ -1,6 +1,7 @@
 package cool.tch.util;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -64,4 +65,18 @@ public class DateUtils {
 
         return today.isBefore(localDate);
     }
+
+    /**
+     * 获取当前的系统时间
+     * @return 当前的系统时间
+     */
+    public static String now() {
+        // 获取当前时间
+        LocalDateTime now = LocalDateTime.now();
+
+        // 格式化输出
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return now.format(formatter);
+    }
+
 }
