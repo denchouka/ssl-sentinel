@@ -8,6 +8,7 @@ import cool.tch.dto.TaskSearchDto;
 import cool.tch.entity.Task;
 import cool.tch.enums.TaskStatusEnum;
 import cool.tch.mapper.TaskMapper;
+import cool.tch.service.HistoryService;
 import cool.tch.service.TaskService;
 import cool.tch.util.BeanCopyUtils;
 import cool.tch.util.DateUtils;
@@ -31,6 +32,12 @@ public class TaskServiceImpl implements TaskService {
 
     @Autowired
     private TaskMapper taskMapper;
+
+    @Autowired
+    private MailUtils mailUtils;
+
+    @Autowired
+    private HistoryService historyService;
 
     /**
      * 添加任务
@@ -91,7 +98,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     /**
-     * 执行任务
+     * 执行任务（发送邮件并更新db）
      */
     @Override
     public void executeTask() {
@@ -99,7 +106,7 @@ public class TaskServiceImpl implements TaskService {
         List<Task> tasks = taskMapper.executeList(TaskStatusEnum.NOT_STARTED.getStatus(), TaskStatusEnum.IN_PROGRESS.getStatus());
         tasks.forEach(task -> {
             // 发邮件提醒
-            MailUtils.send(null, null, null);
+            mailUtils.send(null, null, null);
 
             // 修改任务状态
             Date ddl = task.getDdl();
@@ -107,6 +114,10 @@ public class TaskServiceImpl implements TaskService {
             int newStatus = DateUtils.isTodayBeforeThanDate(ddl) ? TaskStatusEnum.IN_PROGRESS.getStatus() : TaskStatusEnum.COMPLETED.getStatus();
             // 更新db
             taskMapper.updateTaskStatusById(task.getId(), newStatus);
+
+            // 插入新的执行历史
+            historyService.addHistory(task);
         });
     }
+
 }
