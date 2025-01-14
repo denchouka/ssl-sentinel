@@ -58,11 +58,10 @@ public class MailUtils {
      */
     @Async("threadPoolTaskExecutor")
     public void send(String to, String subject, String content) {
-        System.out.println("发送邮件 = " + Thread.currentThread().getName());
         try {
             // 创建一个MINE消息
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, null);
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
             // 主题
             helper.setSubject(subject);
             // From
