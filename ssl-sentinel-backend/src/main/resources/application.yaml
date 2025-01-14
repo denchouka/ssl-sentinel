@@ -28,3 +28,9 @@ task:
     max_pool_size: 200
     queue_capacity: 1200
     keep_alive_seconds: 60
+#发送邮件
+mail:
+  host: smtp.163.com
+  username: ssl_sentinel@163.com
+  password: FFvNpiVFRxc4bamE
+  port: 465

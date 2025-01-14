@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static cool.tch.common.Constant.TASK_MAIL_SUBJECT;
+
 /**
  * @author denchouka
  * @description Task service接口实现
@@ -106,7 +108,7 @@ public class TaskServiceImpl implements TaskService {
         List<Task> tasks = taskMapper.executeList(TaskStatusEnum.NOT_STARTED.getStatus(), TaskStatusEnum.IN_PROGRESS.getStatus());
         tasks.forEach(task -> {
             // 发邮件提醒
-            mailUtils.send(null, null, null);
+            mailUtils.send(task.getEmail(), TASK_MAIL_SUBJECT, task.getContent());
 
             // 修改任务状态
             Date ddl = task.getDdl();

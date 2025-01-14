@@ -121,4 +121,14 @@ public class Constant {
      * 时区：Asia/Shanghai
      */
     public static final String ZONEID_ASIA_SHANGHAI = "Asia/Shanghai";
+
+    /**
+     * 执行任务邮件主题
+     */
+    public static final String TASK_MAIL_SUBJECT = "SSL证书过期提醒";
+
+    /**
+     * 邮件发件人用户名
+     */
+    public static final String TASK_MAIL_FROM_PERSONAL = "SSL Sentinel";
 }
