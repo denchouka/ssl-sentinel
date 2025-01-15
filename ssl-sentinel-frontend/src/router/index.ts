@@ -29,12 +29,6 @@ const router = createRouter({
       meta: {title: '添加任务', menu: true, show: true, icon: './assets/add.png'}
     },
     {
-      path: '/taskHistory',
-      name: 'TaskHistory',
-      component: () => import('../views/task/TaskHistory.vue'),
-      meta: {title: '执行历史', menu: true, show: true, icon: './assets/history.png'}
-    },
-    {
       path: '/:pathMatch(.*)*',
       name: '404',
       component: () => import('../views/error/404.vue'),
