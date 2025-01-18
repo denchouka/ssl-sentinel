@@ -48,45 +48,51 @@
         <!--表格区域-->
         <el-table :data="taskData" border stripe="true" style="width: 100%">
           <el-table-column type="index" align="center" :index="indexMethod" width="50" />
-          <el-table-column header-align="center" align="center" prop="domainName" label="域名" width="195" />
-          <el-table-column header-align="center" align="center" prop="applicationPlatform" label="申请平台" width="170" />
-          <el-table-column header-align="center" align="center" prop="usagePlatform" label="使用平台" width="170" />
-          <el-table-column header-align="center" align="center" prop="purpose" label="用途" width="390">
+          <el-table-column header-align="center" align="center" prop="domainName" label="域名" width="180" />
+          <el-table-column header-align="center" align="center" prop="applicationPlatform" label="申请平台" width="160" />
+          <el-table-column header-align="center" align="center" prop="usagePlatform" label="使用平台" width="160" />
+          <el-table-column header-align="center" align="center" prop="purpose" label="用途" width="380">
             <template #default="scope">
               <el-tooltip :content="scope.row.purpose" placement="top">
                 <div class="multi-line-ellipsis">{{ scope.row.purpose }}</div>
               </el-tooltip>
             </template>
           </el-table-column>
-          <el-table-column header-align="center" align="center" prop="ddl" label="过期日期" width="110" />
-          <el-table-column header-align="center" align="center" prop="date" label="提醒日期" width="110" />
-          <el-table-column header-align="center" align="center" prop="email" label="邮箱地址" width="180">
+          <el-table-column header-align="center" align="center" prop="ddl" label="过期日期" width="105" />
+          <el-table-column header-align="center" align="center" prop="date" label="提醒日期" width="105" />
+          <el-table-column header-align="center" align="center" prop="email" label="邮箱地址" width="170">
             <template #default="scope">
               <el-tooltip :content="scope.row.email" placement="top">
                 <div class="multi-line-ellipsis">{{ scope.row.email }}</div>
               </el-tooltip>
             </template>
           </el-table-column>
-          <el-table-column header-align="center" align="center" prop="content" label="提醒内容" width="390">
+          <el-table-column header-align="center" align="center" prop="content" label="提醒内容" width="380">
             <template #default="scope">
               <el-tooltip :content="scope.row.content" placement="top">
                 <div class="multi-line-ellipsis">{{ scope.row.content }}</div>
               </el-tooltip>
             </template>
           </el-table-column>
-          <el-table-column header-align="center" align="center" prop="remark" label="备注" width="390">
+          <el-table-column header-align="center" align="center" prop="remark" label="备注">
             <template #default="scope">
               <el-tooltip :content="scope.row.remark" placement="top">
                 <div class="multi-line-ellipsis">{{ scope.row.remark }}</div>
               </el-tooltip>
             </template>
           </el-table-column>
-          <el-table-column header-align="center" align="center" prop="status" label="执行状态">
+          <el-table-column header-align="center" align="center" prop="status" label="执行状态" width="95">
             <template #default="scope">
               <el-tag v-if="scope.row.status == 1" type="info">未执行</el-tag>
               <el-tag v-else-if="scope.row.status == 2" type="primary">执行中</el-tag>
               <el-tag v-else-if="scope.row.status == 3" type="success">执行完成</el-tag>
               <el-tag v-else type="danger">未知状态</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column header-align="center" align="center" prop="status" label="操作" width="100">
+            <template #default="scope">
+              <el-button v-if="scope.row.status == 1" type="warning" plain size="small" @click="toEdit(scope.row.id)">修改</el-button>
+              <el-button v-else type="success" plain size="small" @click="toShowHistory(scope.row.id)">执行日志</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -113,7 +119,7 @@
 <script lang="ts" setup>
 import { reactive, ref, onMounted } from 'vue'
 import { formatDate } from '@/utils/index'
-import { taskList } from '@/api/index'
+import { taskList, showHistory } from '@/api/index'
 
 // 定义loading状态
 var loading = ref(false)
@@ -192,7 +198,7 @@ const fetchTaskList = (pageNum, pageSize) => {
     status: taskForm.status,
     ddl: formatDate(taskForm.ddl)
   }
-  console.log(data)
+  
   taskList(data).then(res => {
     // 表格的数据
     taskData = res.data.list
@@ -252,6 +258,24 @@ const handleNextClick = (val: number) => {
   console.log(`下一页, 当前页: ${val}`)
   // 可选：特定逻辑
   fetchTaskList(val + 1, pagination.pageSize)
+}
+
+/**
+ * 修改任务信息
+ * @param id 任务id
+ */
+const toEdit = (id: number) => {
+  console.log('toEdit = ', id)
+}
+
+/**
+ * 查看任务执行历史
+ * @param id 任务id
+ */
+ const toShowHistory = (id: number) => {
+  showHistory(id).then(res => {
+    console.log(res)
+  })
 }
 </script>
 
