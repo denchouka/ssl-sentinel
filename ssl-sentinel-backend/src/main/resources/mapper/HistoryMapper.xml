@@ -12,4 +12,17 @@
             #{executeTime}
         )
     </insert>
+
+    <select id="listHistory" resultType="cool.tch.vo.HistoryShowVO">
+        select
+            id,
+            task_Id,
+            execute_time
+        from
+            history
+        where
+            task_id = #{taskId}
+        order by
+            id
+    </select>
 </mapper>

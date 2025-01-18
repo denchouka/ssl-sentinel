@@ -1,7 +1,10 @@
 package cool.tch.mapper;
 
+import cool.tch.vo.HistoryShowVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author denchouka
@@ -12,4 +15,6 @@ import org.apache.ibatis.annotations.Param;
 public interface HistoryMapper {
 
     void addHistory(@Param("taskId") long taskId, @Param("executeTime") String executeTime);
+
+    List<HistoryShowVO> listHistory(@Param("taskId") long taskId);
 }

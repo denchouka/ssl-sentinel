@@ -16,4 +16,11 @@ public interface HistoryService {
      * @return
      */
     ResponseResult addHistory(Task task);
+
+    /**
+     * 根据taskId查询任务执行历史
+     * @param taskId taskId
+     * @return 任务执行历史
+     */
+    ResponseResult showHistory(Long taskId);
 }

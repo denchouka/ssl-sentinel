@@ -30,18 +30,14 @@ export function taskList(data) {
     data
   })
 }
-
-export function changeMfaCode(data) {
+//history
+export function showHistory(id) {
   return request({
-    url: '/system/admin/changeMfaCode',
-    method: 'post',
-    data
-  })
-}
-export function fetchUser(params) {
-  return request({
-    url: '/system/user/list',
+    url: '/history/show',
     method: 'get',
-    params: params
+    params: {
+      id
+    }
   })
 }
+
