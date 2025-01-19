@@ -30,6 +30,22 @@ export function taskList(data) {
     data
   })
 }
+export function selectTask(id) {
+  return request({
+    url: '/task/one',
+    method: 'get',
+    params: {
+      id
+    }
+  })
+}
+export function editTask(data) {
+  return request({
+    url: '/task/edit',
+    method: 'post',
+    data
+  })
+}
 //history
 export function showHistory(id) {
   return request({
