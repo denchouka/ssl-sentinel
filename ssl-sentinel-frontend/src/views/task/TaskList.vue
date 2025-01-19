@@ -47,7 +47,7 @@
       <el-main>
         <!--表格区域-->
         <el-table :data="taskData" border stripe="true" style="width: 100%">
-          <el-table-column type="index" align="center" :index="indexMethod" width="50" />
+          <el-table-column type="index" align="center" :index="indexMethod" label="No" width="50" />
           <el-table-column header-align="center" align="center" prop="domainName" label="域名" width="180" />
           <el-table-column header-align="center" align="center" prop="applicationPlatform" label="申请平台" width="160" />
           <el-table-column header-align="center" align="center" prop="usagePlatform" label="使用平台" width="160" />
@@ -119,7 +119,7 @@
   <el-dialog
     v-model="noDataDialogVisible"
     title="执行日志"
-    width="500"
+    width="400"
     align-center
     draggable
     :close-on-click-modal="false"
@@ -138,14 +138,18 @@
   <el-dialog
     v-model="dialogFormVisible"
     title="执行日志"
-    width="500"
+    width="400"
     align-center
     draggable
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     :show-close="false"
   >
-    <span>This is a message</span>
+    <el-table :data="gridData" border stripe="true" height="280" >
+      <el-table-column type="index" align="center" :index="indexMethod" label="No" width="50" />
+      <el-table-column header-align="center" align="center" prop="taskId" label="任务ID" width="75" />
+      <el-table-column header-align="center" align="center" prop="executeTime" label="任务执行时间" width="243" />
+    </el-table>
     <template #footer>
       <div class="dialog-footer">
         <el-button type="primary" plain @click="dialogFormVisible = false">关闭</el-button>
@@ -187,6 +191,7 @@ const indexMethod = (index: number) => {
 
 // 表格的数据
 var taskData = []
+var gridData = []
 
 interface Pagination {
   pageNum: number;
@@ -313,13 +318,13 @@ const toEdit = (id: number) => {
  */
  const toShowHistory = (id: number) => {
   showHistory(id).then(res => {
-    console.log(res)
     const data = res.data
     if (data.length == 0) {
       // 无数据
       noDataDialogVisible.value = true
     } else {
-      console.log('有数据')
+      dialogFormVisible.value = true
+      gridData = data
     }
   })
 }
