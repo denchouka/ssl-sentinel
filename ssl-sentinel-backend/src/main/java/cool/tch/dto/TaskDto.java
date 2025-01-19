@@ -22,6 +22,8 @@ public class TaskDto implements Serializable {
 
     private static final long serialVersionUID = 3490539871833448081L;
 
+    private Long id;
+
     @NotBlank(message = "域名不能为空")
     @Length(min = 4, max = 20, message = "域名至少3位，最大10位")
     private String domainName;

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author denchouka
  * @description 任务Controller层
@@ -28,5 +30,15 @@ public class TaskController {
     @PostMapping("/list")
     public ResponseResult list(@RequestBody TaskSearchDto taskSearchDto) {
         return taskService.list(taskSearchDto);
+    }
+
+    @GetMapping("/one")
+    public ResponseResult selectOneById(@NotNull(message = "任务id不能为空") @RequestParam("id") Long id) {
+        return taskService.selectOnebyId(id);
+    }
+
+    @PostMapping("/edit")
+    public ResponseResult editTask(@Validated @RequestBody TaskDto taskDto) {
+        return taskService.editTask(taskDto);
     }
 }

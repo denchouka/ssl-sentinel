@@ -122,4 +122,33 @@ public class TaskServiceImpl implements TaskService {
         });
     }
 
+    /**
+     * 根据任务id查询任务数据
+     * @param id 任务id
+     * @return 任务数据
+     */
+    @Override
+    public ResponseResult selectOnebyId(Long id) {
+        Task task = taskMapper.selectById(id);
+        // 因为是修改数据的查询，task肯定是有值的
+        TaskSearchVO searchVO = BeanCopyUtils.copyObject(task, TaskSearchVO.class);
+        searchVO.setDate(DateUtils.parseDate(task.getDate()));
+        searchVO.setDdl(DateUtils.parseDate(task.getDdl()));
+
+        return ResponseResult.success(searchVO);
+    }
+
+    /**
+     * 修改任务
+     * @param taskDto
+     * @return
+     */
+    @Override
+    public ResponseResult editTask(TaskDto taskDto) {
+        // 复制对象属性
+        Task task = BeanCopyUtils.copyObject(taskDto, Task.class);
+        taskMapper.editTask(task);
+        return ResponseResult.success("修改任务成功");
+    }
+
 }

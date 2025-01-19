@@ -29,4 +29,18 @@ public interface TaskService {
      * 执行任务
      */
     void executeTask();
+
+    /**
+     * 根据任务id查询任务数据
+     * @param id 任务id
+     * @return 任务数据
+     */
+    ResponseResult selectOnebyId(Long id);
+
+    /**
+     * 修改任务
+     * @param taskDto
+     * @return
+     */
+    ResponseResult editTask(TaskDto taskDto);
 }

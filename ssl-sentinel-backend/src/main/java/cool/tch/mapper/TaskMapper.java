@@ -22,4 +22,8 @@ public interface TaskMapper {
     List<Task> executeList(@Param("notStarted") int notStarted, @Param("inProgress") int inProgress);
 
     void updateTaskStatusById(@Param("id") Long id, @Param("status") int status);;
+
+    Task selectById(@Param("id") Long id);
+
+    void editTask(Task task);
 }

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author denchouka
  * @description TODO
@@ -21,7 +23,7 @@ public class HistoryController {
     private HistoryService historyService;
 
     @GetMapping("/show")
-    public ResponseResult showHistory(@RequestParam("id") Long id) {
+    public ResponseResult showHistory(@NotNull(message = "任务id不能为空") @RequestParam("id") Long id) {
         return historyService.showHistory(id);
     }
 }

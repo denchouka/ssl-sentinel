@@ -86,13 +86,49 @@
             ddl
         ]]>
     </select>
-    
+
     <update id="updateTaskStatusById">
         update
             task
         set
             status = #{status}
         where id = #{id}
+    </update>
+
+    <select id="selectById" resultType="cool.tch.entity.Task">
+        select
+            id,
+            domain_name,
+            application_platform,
+            usage_platform,
+            purpose,
+            ddl,
+            date,
+            email,
+            content,
+            remark,
+            status
+        from
+            task
+        where
+            id = #{id}
+    </select>
+
+    <update id="editTask">
+        update
+            task
+        set
+            domain_name = #{domainName},
+            application_platform = #{applicationPlatform},
+            usage_platform = #{usagePlatform},
+            purpose = #{purpose},
+            ddl = #{ddl},
+            date = #{date},
+            email = #{email},
+            content = #{content},
+            remark = #{remark}
+        where
+            id = #{id}
     </update>
 
 </mapper>
