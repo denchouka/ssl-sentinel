@@ -114,6 +114,44 @@
       </el-main>
     </el-container>
   </div>
+
+  <!-- 无数据dialog -->
+  <el-dialog
+    v-model="noDataDialogVisible"
+    title="执行日志"
+    width="500"
+    align-center
+    draggable
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+    :show-close="false"
+  >
+    <el-empty description="无数据" image="/src/assets/nodata.png"/>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button type="primary" plain @click="noDataDialogVisible = false">关闭</el-button>
+      </div>
+    </template>
+  </el-dialog>
+
+  <!-- 有数据dialog -->
+  <el-dialog
+    v-model="dialogFormVisible"
+    title="执行日志"
+    width="500"
+    align-center
+    draggable
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+    :show-close="false"
+  >
+    <span>This is a message</span>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button type="primary" plain @click="dialogFormVisible = false">关闭</el-button>
+      </div>
+    </template>
+  </el-dialog>
 </template>
 
 <script lang="ts" setup>
@@ -123,6 +161,10 @@ import { taskList, showHistory } from '@/api/index'
 
 // 定义loading状态
 var loading = ref(false)
+
+// 定义对话框显示状态
+var dialogFormVisible = ref(false)
+var noDataDialogVisible = ref(false)
 
 const options = [
   {
@@ -242,20 +284,17 @@ const reset = () => {
 
 // 处理当前页面变化
 const handleCurrentChange = (val: number) => {
-  console.log(`处理当前页面变化, 目标页: ${val}`)
   fetchTaskList(val, pagination.pageSize)
 }
 
 // 上一页点击事件
 const handlePrevClick = (val: number) => {
-  console.log(`上一页, 当前页: ${val}`)
   // 可选：特定逻辑
   fetchTaskList(val - 1, pagination.pageSize)
 }
 
 // 下一页点击事件
 const handleNextClick = (val: number) => {
-  console.log(`下一页, 当前页: ${val}`)
   // 可选：特定逻辑
   fetchTaskList(val + 1, pagination.pageSize)
 }
@@ -275,6 +314,13 @@ const toEdit = (id: number) => {
  const toShowHistory = (id: number) => {
   showHistory(id).then(res => {
     console.log(res)
+    const data = res.data
+    if (data.length == 0) {
+      // 无数据
+      noDataDialogVisible.value = true
+    } else {
+      console.log('有数据')
+    }
   })
 }
 </script>
