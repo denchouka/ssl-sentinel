@@ -110,6 +110,7 @@
       </el-form-item>
 
       <el-form-item class="button">
+        <el-button @click="resetForm(taskFormRef)">Reset</el-button>
         <el-button
           type="primary"
           :loading="loading"
@@ -118,7 +119,6 @@
           <span v-if="!loading">添 加</span>
           <span v-else>添 加 中...</span>
         </el-button>
-        <el-button @click="resetForm(taskFormRef)">Reset</el-button>
       </el-form-item>
     </el-form>
   </div>
