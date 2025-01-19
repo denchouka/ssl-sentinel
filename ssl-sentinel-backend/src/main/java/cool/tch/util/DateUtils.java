@@ -32,6 +32,22 @@ public class DateUtils {
     }
 
     /**
+     * 时间格式化
+     * @param dateTime 时间数据
+     * @return 格式化后的时间数据
+     */
+    public static String parseDateTime(Date dateTime) {
+        // 指定时区为Asia/Shanghai
+        ZoneId shanghaiZone = ZoneId.of(ZONEID_ASIA_SHANGHAI);
+        // 日期转换为LocalDate
+        LocalDateTime localDateTime = dateTime.toInstant().atZone(shanghaiZone).toLocalDateTime();
+        // 使用DateTimeFormatter格式化
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        return localDateTime.format(formatter);
+    }
+
+    /**
      * 判断日期1是否早于日期2
      * @param date1 日期1
      * @param date2 日期2
