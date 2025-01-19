@@ -580,6 +580,8 @@ const saveEditedData = async (formEl: FormInstance | undefined) => {
       const res = editTask(taskDto)
       loading.value = false
       editDataDialogVisible.value = false
+      // 刷新查询任务列表(默认是第1页)
+      fetchTaskList(1, pagination.pageSize)
       // 弹框提醒
       ElMessage({
         message: '修改成功',
