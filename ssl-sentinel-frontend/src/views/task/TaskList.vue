@@ -156,12 +156,146 @@
       </div>
     </template>
   </el-dialog>
+
+  <!-- 修改任务数据dialog -->
+  <el-dialog
+    v-model="editDataDialogVisible"
+    title="修改任务"
+    width="600"
+    align-center
+    draggable
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+    :show-close="false"
+  >
+    <!--修改任务的form start-->
+    <el-form
+      ref="editTaskFormRef"
+      style="max-width: 600px"
+      :model="editTaskForm"
+      :rules="editFormRules"
+      label-width="auto"
+      class="form"
+      :size="formSize"
+      status-icon
+    >
+      <el-form-item label="域名" prop="domainName">
+        <el-input
+          v-model="editTaskForm.domainName"
+          minlength="4"
+          maxlength="20"
+          show-word-limit
+          placeholder="输入域名"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item label="申请平台" prop="applicationPlatform">
+        <el-input
+          v-model="editTaskForm.applicationPlatform"
+          minlength="3"
+          maxlength="10"
+          show-word-limit
+          placeholder="输入申请平台"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item label="使用平台" prop="usagePlatform">
+        <el-input
+          v-model="editTaskForm.usagePlatform"
+          minlength="3"
+          maxlength="10"
+          show-word-limit
+          placeholder="输入使用平台"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item label="用途" prop="purpose">
+        <el-input
+          v-model="editTaskForm.purpose"
+          :rows="2"
+          type="textarea"
+          minlength="10"
+          maxlength="100"
+          show-word-limit
+          placeholder="输入用途"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item label="过期日期" required>
+        <el-col :span="24">
+          <el-form-item prop="ddl">
+            <el-date-picker
+              v-model="editTaskForm.ddl"
+              type="date"
+              placeholder="选择过期的日期"
+              style="width: 100%"
+            />
+          </el-form-item>
+        </el-col>
+      </el-form-item>
+      <el-form-item label="提醒日期" required>
+        <el-col :span="24">
+          <el-form-item prop="date">
+            <el-date-picker
+              v-model="editTaskForm.date"
+              type="date"
+              placeholder="选择从哪天开始提醒"
+              style="width: 100%"
+            />
+          </el-form-item>
+        </el-col>
+      </el-form-item>
+      <el-form-item label="邮箱地址" prop="email">
+        <el-input
+          v-model="editTaskForm.email"
+          show-word-limit
+          maxlength="50"
+          placeholder="输入邮箱地址"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item label="提醒内容" prop="content">
+        <el-input
+          v-model="editTaskForm.content"
+          :rows="2"
+          type="textarea"
+          minlength="10"
+          maxlength="100"
+          show-word-limit
+          placeholder="输入提醒内容"
+          clearable/>
+      </el-form-item>
+      <el-form-item label="备注" prop="remark">
+        <el-input
+          v-model="editTaskForm.remark"
+          :rows="2"
+          type="textarea"
+          maxlength="100"
+          show-word-limit
+          placeholder="输入备注"
+          clearable
+        />
+      </el-form-item>
+    </el-form>
+    <!--修改任务的form end-->
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button type="primary" plain @click="editDataDialogVisible = false">关闭</el-button>
+        <el-button type="primary" @click="saveEditedData(editTaskFormRef)">
+          <span v-if="!loading">保存修改</span>
+          <span v-else>保存中...</span>
+        </el-button>
+      </div>
+    </template>
+  </el-dialog>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref, onMounted } from 'vue'
 import { formatDate } from '@/utils/index'
-import { taskList, showHistory } from '@/api/index'
+import { taskList, showHistory, selectTask, editTask } from '@/api/index'
+import type { ComponentSize, FormInstance, FormRules } from 'element-plus'
+import { ElMessage } from 'element-plus'
 
 // 定义loading状态
 var loading = ref(false)
@@ -169,6 +303,7 @@ var loading = ref(false)
 // 定义对话框显示状态
 var dialogFormVisible = ref(false)
 var noDataDialogVisible = ref(false)
+var editDataDialogVisible = ref(false)
 
 const options = [
   {
@@ -221,6 +356,88 @@ const taskForm = reactive<TaskForm>({
   domainName: '',
   status: '',
   ddl: ''
+})
+
+// 定义任务表单的数据结构
+interface EditTaskForm {
+  id: number,
+  domainName: string
+  applicationPlatform: string,
+  usagePlatform: string,
+  purpose: string,
+  ddl: string
+  date: string
+  email: string
+  content: string
+  remark: string
+}
+
+// 表单尺寸选项，为默认值
+const formSize = ref<ComponentSize>('default')
+
+// 表单实例引用，用于访问表单的方法
+const editTaskFormRef = ref<FormInstance>()
+
+// 使用reactive创建一个响应式的任务表单对象，并初始化
+var editTaskForm = reactive<EditTaskForm>({
+  id: 0,
+  domainName: '',
+  applicationPlatform: '',
+  usagePlatform: '',
+  purpose: '',
+  ddl: '',
+  date: '',
+  email: '',
+  content: '',
+  remark: '',
+})
+
+// 验证规则
+const editFormRules = reactive<FormRules<EditTaskForm>>({
+  domainName: [
+    { required: true, message: '请输入域名', trigger: 'blur' },
+    { min: 4, max: 20, message: 'Length should be 4 to 20', trigger: 'blur' }
+  ],
+  applicationPlatform: [
+    { required: true, message: '请输入申请平台', trigger: 'blur' },
+    { min: 3, max: 10, message: 'Length should be 3 to 10', trigger: 'blur' }
+  ],
+  usagePlatform: [
+    { required: true, message: '请输入使用平台', trigger: 'blur' },
+    { min: 3, max: 10, message: 'Length should be 3 to 10', trigger: 'blur' }
+  ],
+  purpose: [
+    { required: true, message: '请输入用途', trigger: 'blur' },
+    {  min: 10, max: 100, message: 'Length should be 10 to 100', trigger: 'blur' }
+  ],
+  ddl: [
+    {
+      type: 'date',
+      required: true,
+      message: '请选择过期日期',
+      trigger: 'change'
+    },
+  ],
+  date: [
+    {
+      type: 'date',
+      required: true,
+      message: '请选择提醒日期',
+      trigger: 'change'
+    },
+  ],
+  email: [
+    { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+    { max: 50, message: 'Length should be less than 50', trigger: 'blur' }
+  ],
+  content: [
+    { required: true, message: '请输入提醒内容', trigger: 'blur' },
+    { min: 10, max: 100, message: 'Length should be 10 to 100', trigger: 'blur' }
+  ],
+  remark: [
+    { required: false, message: '请输入备注', trigger: 'blur' },
+    {  max: 100, message: 'Length should be less than 100', trigger: 'blur' }
+  ]
 })
 
 /**
@@ -308,15 +525,21 @@ const handleNextClick = (val: number) => {
  * 修改任务信息
  * @param id 任务id
  */
-const toEdit = (id: number) => {
-  console.log('toEdit = ', id)
+const toEdit = async (id: number) => {
+  // 根据id查询任务数据
+  const res = await selectTask(id)
+  // 更新数据并
+  // 更新数据,使用 Object.assign 保持响应性
+  Object.assign(editTaskForm, res.data)
+  // 显示对话框
+  editDataDialogVisible.value = true
 }
 
 /**
  * 查看任务执行历史
  * @param id 任务id
  */
- const toShowHistory = (id: number) => {
+const toShowHistory = (id: number) => {
   showHistory(id).then(res => {
     const data = res.data
     if (data.length == 0) {
@@ -327,6 +550,45 @@ const toEdit = (id: number) => {
       gridData = data
     }
   })
+}
+
+/**
+ * 保存修改后的任务数据
+ */
+const saveEditedData = async (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      // addTask
+      loading.value = true
+      
+      const taskDto = {
+        id: editTaskForm.id,
+        domainName: editTaskForm.domainName,
+        applicationPlatform: editTaskForm.applicationPlatform,
+        usagePlatform: editTaskForm.usagePlatform,
+        purpose: editTaskForm.purpose,
+        ddl: formatDate(editTaskForm.ddl),
+        date: formatDate(editTaskForm.date),
+        email: editTaskForm.email,
+        content: editTaskForm.content,
+        remark: editTaskForm.remark
+      }
+
+      // 发送添加任务请求
+      const res = editTask(taskDto)
+      loading.value = false
+      editDataDialogVisible.value = false
+      // 弹框提醒
+      ElMessage({
+        message: '修改成功',
+        type: 'success',
+      })
+    } else {
+      console.log('error submit!', fields)
+    }
+  })  
 }
 </script>
 
