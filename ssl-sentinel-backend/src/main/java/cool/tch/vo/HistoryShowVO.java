@@ -23,5 +23,5 @@ public class HistoryShowVO implements Serializable {
 
     private Long taskId;
 
-    private Date executeTime;
+    private String executeTime;
 }

@@ -13,7 +13,7 @@
         )
     </insert>
 
-    <select id="listHistory" resultType="cool.tch.vo.HistoryShowVO">
+    <select id="listHistory" resultType="cool.tch.entity.History">
         select
             id,
             task_Id,
