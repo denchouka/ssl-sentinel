@@ -11,11 +11,14 @@ import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Properties;
 
-import static cool.tch.common.Constant.TASK_MAIL_FROM_PERSONAL;
+import static cool.tch.common.Constant.*;
 
 /**
  * @author denchouka
@@ -68,13 +71,14 @@ public class MailUtils {
             helper.setFrom(Objects.requireNonNull(javaMailSender.getUsername()), TASK_MAIL_FROM_PERSONAL);
             // To
             helper.setTo(to);
-            // 发送日期
-            helper.setSentDate(new Date());
+            // 发送日期，指定时区为Asia/Shanghai
+            ZonedDateTime now = ZonedDateTime.now(ZoneId.of(ZONEID_DEFAULT));
+            Date from = Date.from(now.toInstant());
+            helper.setSentDate(from);
             // 正文
             helper.setText(content);
             // 发送
             javaMailSender.send(mimeMessage);
-
         } catch (MessagingException | UnsupportedEncodingException e) {
             throw new BusinessException(e.getMessage());
         }

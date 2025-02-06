@@ -118,9 +118,10 @@ public class Constant {
     public static final String ACCESS_CONTROL_EXPOSE_HEADERS = "access-control-expose-headers";
 
     /**
-     * 时区：Asia/Shanghai
+     * 默认时区
      */
-    public static final String ZONEID_ASIA_SHANGHAI = "Asia/Shanghai";
+    // public static final String ZONEID_DEFAULT = "Asia/Shanghai";
+    public static final String ZONEID_DEFAULT = "UTC";
 
     /**
      * 执行任务邮件主题

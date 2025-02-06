@@ -6,7 +6,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-import static cool.tch.common.Constant.ZONEID_ASIA_SHANGHAI;
+import static cool.tch.common.Constant.ZONEID_DEFAULT;
 
 /**
  * @author denchouka
@@ -22,7 +22,7 @@ public class DateUtils {
      */
     public static String parseDate(Date date) {
         // 指定时区为Asia/Shanghai
-        ZoneId shanghaiZone = ZoneId.of(ZONEID_ASIA_SHANGHAI);
+        ZoneId shanghaiZone = ZoneId.of(ZONEID_DEFAULT);
         // 日期转换为LocalDate
         LocalDate localDate = date.toInstant().atZone(shanghaiZone).toLocalDate();
         // 使用DateTimeFormatter格式化
@@ -38,7 +38,7 @@ public class DateUtils {
      */
     public static String parseDateTime(Date dateTime) {
         // 指定时区为Asia/Shanghai
-        ZoneId shanghaiZone = ZoneId.of(ZONEID_ASIA_SHANGHAI);
+        ZoneId shanghaiZone = ZoneId.of(ZONEID_DEFAULT);
         // 日期转换为LocalDate
         LocalDateTime localDateTime = dateTime.toInstant().atZone(shanghaiZone).toLocalDateTime();
         // 使用DateTimeFormatter格式化
@@ -56,7 +56,7 @@ public class DateUtils {
     public static boolean isBefore(Date date1, Date date2) {
 
         // 指定时区为Asia/Shanghai
-        ZoneId shanghaiZone = ZoneId.of(ZONEID_ASIA_SHANGHAI);
+        ZoneId shanghaiZone = ZoneId.of(ZONEID_DEFAULT);
         // date1转换为LocalDate
         LocalDate localDate1 = date1.toInstant().atZone(shanghaiZone).toLocalDate();
         // date2转换为LocalDate
@@ -72,7 +72,7 @@ public class DateUtils {
      */
     public static boolean isTodayBeforeThanDate(Date date) {
         // 指定时区为Asia/Shanghai
-        ZoneId shanghaiZone = ZoneId.of(ZONEID_ASIA_SHANGHAI);
+        ZoneId shanghaiZone = ZoneId.of(ZONEID_DEFAULT);
         // 获取当前日期
         LocalDate today = LocalDate.now(shanghaiZone);
 
