@@ -5,7 +5,7 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/ssl_sentinel?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&tinyInt1isBit=false&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: mysql830
+    password: ${MYSQL_PASSWORD:password}
     type: com.alibaba.druid.pool.DruidDataSource
     initial-size: 10
     max-active: 150
