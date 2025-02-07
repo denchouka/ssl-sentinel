@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>cool.tch</groupId>
     <artifactId>ssl-sentinel-backend</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>ssl-sentinel-backend</name>
     <description>ssl-sentinel-backend</description>
     <properties>
