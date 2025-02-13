@@ -16,6 +16,9 @@ CREATE TABLE `user`  (
   UNIQUE INDEX `username`(`username`) USING BTREE
 ) ENGINE = INNODB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户表' ROW_FORMAT = DYNAMIC;
 
+insert into ssl_sentinel.user (username, password, nickname, secret_key)
+values ('denchouka', '$2a$10$RN6VBTQdT9Ywp8HDWDF8IuLZ1Kh5c18wpF4kMBhJ.FoedsOUk8B02', 'Admin', 'A5I2UH6L2K22MJU5');
+
 /* 任务表 */
 DROP TABLE IF EXISTS `task`;
 CREATE TABLE `task`  (
