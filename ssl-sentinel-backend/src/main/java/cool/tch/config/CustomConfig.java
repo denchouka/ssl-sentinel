@@ -22,7 +22,7 @@ public class CustomConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         // 配置全局 CORS
-        registry.addMapping("/**") // 指定所有路径
+        registry.addMapping(REQUEST_URL_PREFIX + "/**") // 指定所有路径
                 .allowedOrigins(REQUEST_ORIGINS_LOCALHOST, REQUEST_ORIGINS_DOMAIN) // 允许所有源
                 .allowedMethods(REQUEST_METHOD_GET, REQUEST_METHOD_POST) // 允许的方法
                 .allowedHeaders(REQUEST_HEADER_CONTENT_TYPE, REQUEST_HEADER_ACCESS_TOKEN, REQUEST_HEADER_AUTHORIZATION, REQUEST_HEADER_USER_NAME) // 允许所有头

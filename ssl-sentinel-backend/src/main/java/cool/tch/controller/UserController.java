@@ -18,6 +18,7 @@ import static cool.tch.common.Constant.*;
  * @date 2024/10/20 22:31
  */
 @RestController()
+@RequestMapping(REQUEST_URL_PREFIX)
 public class UserController {
 
     @Autowired

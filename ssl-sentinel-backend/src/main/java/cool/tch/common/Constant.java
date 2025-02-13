@@ -39,6 +39,11 @@ public class Constant {
     public static final String EXECUTE_TASK_CROM = "0 0 1 * * ?";
 
     /**
+     * 请求url的共通前缀
+     */
+    public static final String REQUEST_URL_PREFIX = "/api";
+
+    /**
      * 请求的url:login
      */
     public static final String REQUEST_URL_LOGIN = "/login";
@@ -57,9 +62,9 @@ public class Constant {
      * 不需要校验token的请求url
      */
     public static final String[] REQUEST_URL_NO_VERIFY = {
-            REQUEST_URL_LOGIN,
-            REQUEST_URL_LOGOUT,
-            REQUEST_URL_ERROR
+            REQUEST_URL_PREFIX + REQUEST_URL_LOGIN,
+            REQUEST_URL_PREFIX + REQUEST_URL_LOGOUT,
+            REQUEST_URL_PREFIX + REQUEST_URL_ERROR
     };
 
     /**

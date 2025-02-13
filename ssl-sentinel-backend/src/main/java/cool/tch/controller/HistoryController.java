@@ -10,13 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
 
+import static cool.tch.common.Constant.REQUEST_URL_PREFIX;
+
 /**
  * @author denchouka
  * @description TODO
  * @date 2025/1/16 22:44
  */
 @RestController
-@RequestMapping("/history")
+@RequestMapping(REQUEST_URL_PREFIX + "/history")
 public class HistoryController {
 
     @Autowired

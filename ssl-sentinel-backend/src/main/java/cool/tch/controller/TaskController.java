@@ -10,13 +10,15 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 
+import static cool.tch.common.Constant.REQUEST_URL_PREFIX;
+
 /**
  * @author denchouka
  * @description 任务Controller层
  * @date 2024/11/29 21:00
  */
 @RestController
-@RequestMapping("/task")
+@RequestMapping(REQUEST_URL_PREFIX + "/task")
 public class TaskController {
 
     @Autowired
