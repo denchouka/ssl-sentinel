@@ -7,6 +7,9 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
+import static cool.tch.common.Constant.FORMATTER_DATE;
+import static cool.tch.common.Constant.ZONEID_SHANGHAI;
+
 /**
  * @author denchouka
  * @description 任务列表检索参数
@@ -30,6 +33,6 @@ public class TaskSearchDto extends Page implements Serializable {
     /**
      * 过期时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @JsonFormat(pattern = FORMATTER_DATE, timezone = ZONEID_SHANGHAI)
     private Date ddl;
 }

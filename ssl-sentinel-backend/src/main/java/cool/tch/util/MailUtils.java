@@ -11,7 +11,6 @@ import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
-import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
@@ -45,7 +44,7 @@ public class MailUtils {
         javaMailSender.setUsername(emailUsername);
         javaMailSender.setPassword(emailPassword);
         javaMailSender.setPort(emailPort);
-        javaMailSender.setDefaultEncoding("UTF-8");
+        javaMailSender.setDefaultEncoding(ENCODING_DEFAULT);
         Properties p = new Properties();
         p.setProperty("mail.smtp.auth", "true");
         p.setProperty("mail.debug", "true");
@@ -64,15 +63,15 @@ public class MailUtils {
         try {
             // 创建一个MINE消息
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, ENCODING_DEFAULT);
             // 主题
             helper.setSubject(subject);
             // From
             helper.setFrom(Objects.requireNonNull(javaMailSender.getUsername()), TASK_MAIL_FROM_PERSONAL);
             // To
             helper.setTo(to);
-            // 发送日期，指定时区为Asia/Shanghai
-            ZonedDateTime now = ZonedDateTime.now(ZoneId.of(ZONEID_DEFAULT));
+            // 发送日期，指定时区为UTC
+            ZonedDateTime now = ZonedDateTime.now(ZoneId.of(ZONEID_UTC));
             Date from = Date.from(now.toInstant());
             helper.setSentDate(from);
             // 正文

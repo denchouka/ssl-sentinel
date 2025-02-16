@@ -123,10 +123,29 @@ public class Constant {
     public static final String ACCESS_CONTROL_EXPOSE_HEADERS = "access-control-expose-headers";
 
     /**
-     * 默认时区
+     * 时区 上海
      */
-    // public static final String ZONEID_DEFAULT = "Asia/Shanghai";
-    public static final String ZONEID_DEFAULT = "UTC";
+    public static final String ZONEID_SHANGHAI = "Asia/Shanghai";
+
+    /**
+     * 时区 UTC
+     */
+    public static final String ZONEID_UTC = "UTC";
+
+    /**
+     * 日期formatter
+     */
+    public static final String FORMATTER_DATE = "yyyy-MM-dd";
+
+    /**
+     * 默认字符编码
+     */
+    public static final String ENCODING_DEFAULT = "UTF-8";
+
+    /**
+     * 时间formatter
+     */
+    public static final String FORMATTER_DATETIME = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * 执行任务邮件主题

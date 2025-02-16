@@ -63,8 +63,8 @@ public class CustomInterceptor implements HandlerInterceptor {
      */
     private void returnJson(HttpServletResponse response, String json){
         PrintWriter writer = null;
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
+        response.setCharacterEncoding(ENCODING_DEFAULT);
+        response.setContentType("application/json; charset=" + ENCODING_DEFAULT);
 
         try {
             writer = response.getWriter();

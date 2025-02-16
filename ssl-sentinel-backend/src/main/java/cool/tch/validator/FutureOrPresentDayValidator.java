@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-import static cool.tch.common.Constant.ZONEID_DEFAULT;
+import static cool.tch.common.Constant.ZONEID_SHANGHAI;
 
 /**
  * @author denchouka
@@ -20,7 +20,7 @@ public class FutureOrPresentDayValidator implements ConstraintValidator<FutureOr
     @Override
     public boolean isValid(Date date, ConstraintValidatorContext context) {
         // 指定时区为Asia/Shanghai
-        ZoneId shanghaiZone = ZoneId.of(ZONEID_DEFAULT);
+        ZoneId shanghaiZone = ZoneId.of(ZONEID_SHANGHAI);
         // 获取当前日期
         LocalDate now = LocalDate.now(shanghaiZone);
         // 要校验的日期转换为LocalDate

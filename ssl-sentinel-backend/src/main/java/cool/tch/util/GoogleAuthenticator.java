@@ -11,6 +11,8 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import static cool.tch.common.Constant.ENCODING_DEFAULT;
+
 /**
  * 谷歌身份验证器工具类
  */
@@ -63,9 +65,9 @@ public class GoogleAuthenticator {
         String normalizedBase32Key = secretKey.replace(" ", "").toUpperCase();
         try {
             return "otpauth://totp/"
-                    + URLEncoder.encode((!StringUtils.isEmpty(issuer) ? (issuer + ":") : "") + account, "UTF-8").replace("+", "%20")
-                    + "?secret=" + URLEncoder.encode(normalizedBase32Key, "UTF-8").replace("+", "%20")
-                    + (!StringUtils.isEmpty(issuer) ? ("&issuer=" + URLEncoder.encode(issuer, "UTF-8").replace("+", "%20")) : "");
+                    + URLEncoder.encode((!StringUtils.isEmpty(issuer) ? (issuer + ":") : "") + account, ENCODING_DEFAULT).replace("+", "%20")
+                    + "?secret=" + URLEncoder.encode(normalizedBase32Key, ENCODING_DEFAULT).replace("+", "%20")
+                    + (!StringUtils.isEmpty(issuer) ? ("&issuer=" + URLEncoder.encode(issuer, ENCODING_DEFAULT).replace("+", "%20")) : "");
         } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException(e);
         }

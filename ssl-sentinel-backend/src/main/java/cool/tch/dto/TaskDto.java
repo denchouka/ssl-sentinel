@@ -10,6 +10,9 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Date;
 
+import static cool.tch.common.Constant.FORMATTER_DATE;
+import static cool.tch.common.Constant.ZONEID_SHANGHAI;
+
 
 /**
  * @author denchouka
@@ -41,12 +44,12 @@ public class TaskDto implements Serializable {
     private String purpose;
 
     @NotNull
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @JsonFormat(pattern = FORMATTER_DATE, timezone = ZONEID_SHANGHAI)
     @FutureOrPresentDay(message = "过期日期必须是以后或现在的日期")
     private Date ddl;
 
     @NotNull
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @JsonFormat(pattern = FORMATTER_DATE, timezone = ZONEID_SHANGHAI)
     @FutureOrPresentDay(message = "提醒日期必须是以后或现在的日期")
     private Date date;
 
