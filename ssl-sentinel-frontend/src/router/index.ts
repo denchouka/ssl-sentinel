@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import listIcon from '../assets/list.png'
+import addIcon from '../assets/add.png'
 
 /**
  * meta {
@@ -20,13 +22,13 @@ const router = createRouter({
       path: '/taskList',
       name: 'TaskList',
       component: () => import('../views/task/TaskList.vue'),
-      meta: {title: '任务列表', menu: true, show: true, icon: './assets/list.png'}
+      meta: {title: '任务列表', menu: true, show: true, icon: listIcon}
     },
     {
       path: '/addTask',
       name: 'AddTask',
       component: () => import('../views/task/AddTask.vue'),
-      meta: {title: '添加任务', menu: true, show: true, icon: './assets/add.png'}
+      meta: {title: '添加任务', menu: true, show: true, icon: addIcon}
     },
     {
       path: '/:pathMatch(.*)*',

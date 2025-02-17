@@ -12,7 +12,7 @@
             <el-menu router default-active="1">
               <el-menu-item v-for="route in routes" :key="route.path" :index="route.path">
                 <div class="menu-item">
-                  <img :src="getIcon(route.meta.icon)" :alt="route.meta.title" class="menu-icon">
+                  <img :src="route.meta.icon" :alt="route.meta.title" class="menu-icon">
                   {{ route.meta.title }}
                 </div>
               </el-menu-item>
@@ -63,14 +63,9 @@ export default {
       return route.meta && route.meta.title && route.meta.menu
     })
 
-    const getIcon = (icon) => {
-      return new URL(icon, import.meta.url).href
-    }
-
     return {
       routes,
-      isShowMenu,
-      getIcon
+      isShowMenu
     }
   }
 }

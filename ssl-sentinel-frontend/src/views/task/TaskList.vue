@@ -126,7 +126,7 @@
     :close-on-press-escape="false"
     :show-close="false"
   >
-    <el-empty description="无数据" image="/src/assets/nodata.png"/>
+    <el-empty description="无数据" :image="nodata"/>
     <template #footer>
       <div class="dialog-footer">
         <el-button type="primary" plain @click="noDataDialogVisible = false">关闭</el-button>
@@ -296,6 +296,7 @@ import { formatDate } from '@/utils/index'
 import { taskList, showHistory, selectTask, editTask } from '@/api/index'
 import type { ComponentSize, FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
+import nodata from '@/assets/nodata.png'
 
 // 定义loading状态
 var loading = ref(false)
