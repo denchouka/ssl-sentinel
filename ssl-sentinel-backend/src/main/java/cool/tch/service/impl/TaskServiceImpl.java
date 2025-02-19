@@ -108,7 +108,7 @@ public class TaskServiceImpl implements TaskService {
         List<Task> tasks = taskMapper.executeList(TaskStatusEnum.NOT_STARTED.getStatus(), TaskStatusEnum.IN_PROGRESS.getStatus());
         tasks.forEach(task -> {
             // 发邮件提醒
-            mailUtils.send(task.getEmail(), TASK_MAIL_SUBJECT, task.getContent());
+            mailUtils.send(task.getEmail(), TASK_MAIL_SUBJECT, task);
 
             // 修改任务状态
             Date ddl = task.getDdl();

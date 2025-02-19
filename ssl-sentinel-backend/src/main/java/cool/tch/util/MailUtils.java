@@ -1,5 +1,6 @@
 package cool.tch.util;
 
+import cool.tch.entity.Task;
 import cool.tch.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -56,10 +57,10 @@ public class MailUtils {
      * 发送邮件
      * @param to 邮件接收者
      * @param subject 邮件主题
-     * @param content 邮件内容
+     * @param task 任务数据
      */
     @Async("threadPoolTaskExecutor")
-    public void send(String to, String subject, String content) {
+    public void send(String to, String subject, Task task) {
         try {
             // 创建一个MINE消息
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -75,11 +76,24 @@ public class MailUtils {
             Date from = Date.from(now.toInstant());
             helper.setSentDate(from);
             // 正文
-            helper.setText(content);
+            helper.setText(messageContent(task));
             // 发送
             javaMailSender.send(mimeMessage);
         } catch (MessagingException | UnsupportedEncodingException e) {
             throw new BusinessException(e.getMessage());
         }
+    }
+
+    private static String messageContent(Task task) {
+        return  "用户你好，域名【" + task.getDomainName() + "】的SSL证书即将过期，请尽快处理，详细信息如下。\n\n" +
+                "【域名】" + task.getDomainName() + "\n" +
+                "【申请平台】" + task.getApplicationPlatform() + "\n" +
+                "【使用平台】" + task.getUsagePlatform() + "\n" +
+                "【用途】" + task.getPurpose() + "\n" +
+                "【过期日期】" + DateUtils.parseDate(task.getDdl()) + "\n" +
+                "【提醒内容】" + task.getContent() + "\n" +
+                "【备注】" + task.getRemark() + "\n\n" +
+                "Copyright © 2024 - " + DateUtils.thisYear() + " SSL Sentinel. \nAll Rights Reserved.\n" +
+                "Powered by https://ssl.tch.cool/";
     }
 }

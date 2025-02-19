@@ -2,6 +2,7 @@ package cool.tch.util;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Year;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -93,6 +94,14 @@ public class DateUtils {
         // 格式化输出
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(FORMATTER_DATETIME);
         return now.format(formatter);
+    }
+
+    /**
+     * 获取当前的年
+     * @return 当前年
+     */
+    public static int thisYear() {
+        return Year.now().getValue();
     }
 
 }
