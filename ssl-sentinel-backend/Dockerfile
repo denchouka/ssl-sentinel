@@ -5,7 +5,6 @@ FROM public.ecr.aws/amazoncorretto/amazoncorretto:17-amd64
 LABEL maintainer="Denchouka"
 
 # 设置环境变量
-ENV MYSQL_PASSWORD=Mysql8039...
 ENV JAR_NAME=ssl-sentinel-backend-2.1.0.jar
 
 # 设置工作目录
