@@ -1,9 +1,9 @@
 package cool.tch.validator;
 
 import cool.tch.annotations.FutureOrPresentDay;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;

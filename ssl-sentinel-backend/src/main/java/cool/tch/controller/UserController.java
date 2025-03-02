@@ -3,12 +3,11 @@ package cool.tch.controller;
 import cool.tch.common.ResponseResult;
 import cool.tch.dto.LoginDto;
 import cool.tch.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import static cool.tch.common.Constant.*;
 

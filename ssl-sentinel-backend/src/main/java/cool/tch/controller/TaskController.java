@@ -4,11 +4,10 @@ import cool.tch.common.ResponseResult;
 import cool.tch.dto.TaskDto;
 import cool.tch.dto.TaskSearchDto;
 import cool.tch.service.TaskService;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.constraints.NotNull;
 
 import static cool.tch.common.Constant.REQUEST_URL_PREFIX;
 

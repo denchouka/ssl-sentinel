@@ -3,10 +3,12 @@ package cool.tch.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import cool.tch.annotations.BeforeThanTargetDate;
 import cool.tch.annotations.FutureOrPresentDay;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Date;
 

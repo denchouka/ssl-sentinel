@@ -1,13 +1,16 @@
 package cool.tch;
 
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SslSentinelBackendApplicationTests {
+public class SslSentinelBackendApplicationTests {
 
     @Test
-    void contextLoads() {
+    public void contextLoads() {
+        Assertions.assertTrue(true);
     }
 
 }

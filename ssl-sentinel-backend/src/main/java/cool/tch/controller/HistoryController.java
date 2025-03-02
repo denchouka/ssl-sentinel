@@ -2,13 +2,12 @@ package cool.tch.controller;
 
 import cool.tch.common.ResponseResult;
 import cool.tch.service.HistoryService;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.constraints.NotNull;
 
 import static cool.tch.common.Constant.REQUEST_URL_PREFIX;
 

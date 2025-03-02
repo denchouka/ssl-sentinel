@@ -2,6 +2,7 @@ package cool.tch.config;
 
 import cool.tch.util.NetUtils;
 import cool.tch.util.TokenUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
@@ -11,8 +12,6 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-
-import javax.servlet.http.HttpServletRequest;
 
 import static cool.tch.common.Constant.*;
 

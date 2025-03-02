@@ -3,9 +3,9 @@ package cool.tch.validator;
 import cool.tch.annotations.BeforeThanTargetDate;
 import cool.tch.exception.BusinessException;
 import cool.tch.util.DateUtils;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 import java.lang.reflect.Field;
 import java.util.Date;
 
