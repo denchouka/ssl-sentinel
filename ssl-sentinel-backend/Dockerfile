@@ -11,11 +11,11 @@ ENV JAR_NAME=ssl-sentinel-backend-2.1.0.jar
 WORKDIR /ssl
 
 # 将项目的jar文件复制到容器中
-COPY target/${JAR_NAME} /ssl/${JAR_NAME}
+COPY target/ssl-sentinel-backend-2.1.0.jar /ssl/ssl-sentinel-backend-2.1.0.jar
 
 # 暴露应用程序使用的端口
 EXPOSE 8882
 
 # 运行应用程序
-ENTRYPOINT ["java", "-DMYSQL_PASSWORD=${MYSQL_PASSWORD}", "-jar", "${JAR_NAME}"]
+ENTRYPOINT ["sh", "-c", "java -DMYSQL_URL=${MYSQL_URL} -DMYSQL_PASSWORD=${MYSQL_PASSWORD} -jar ssl-sentinel-backend-2.1.0.jar"]
 
