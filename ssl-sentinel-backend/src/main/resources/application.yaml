@@ -31,6 +31,6 @@ task:
 #发送邮件
 mail:
   host: smtp.qiye.aliyun.com
-  username: ssl@tch.cool
-  password: F4tlCyuv4afCtuZr
+  username: ${MAIL_USERNAME}
+  password: ${MAIL_PASSWORD}
   port: 465
