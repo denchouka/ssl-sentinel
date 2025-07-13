@@ -107,18 +107,23 @@ public class TaskServiceImpl implements TaskService {
         // 查询所有未执行和执行中，且已到提醒日期的任务，按过期时间排序
         List<Task> tasks = taskMapper.executeList(TaskStatusEnum.NOT_STARTED.getStatus(), TaskStatusEnum.IN_PROGRESS.getStatus());
         tasks.forEach(task -> {
-            // 发邮件提醒
-            mailUtils.send(task.getEmail(), TASK_MAIL_SUBJECT, task);
 
             // 修改任务状态
             Date ddl = task.getDdl();
-            // 今天 < ddl : 执行中     今天 >= ddl : 执行完成
-            int newStatus = DateUtils.isTodayBeforeThanDate(ddl) ? TaskStatusEnum.IN_PROGRESS.getStatus() : TaskStatusEnum.COMPLETED.getStatus();
-            // 更新db
-            taskMapper.updateTaskStatusById(task.getId(), newStatus);
+            if (DateUtils.isTodayBeforeThanDate(ddl)) {
+                //  今天 < ddl : 执行完成     只更新db。任务结束。
+                taskMapper.updateTaskStatusById(task.getId(), TaskStatusEnum.COMPLETED.getStatus());
+            } else {
+                // 今天 >= ddl : 执行中
+                // 更新db
+                taskMapper.updateTaskStatusById(task.getId(), TaskStatusEnum.IN_PROGRESS.getStatus());
 
-            // 插入新的执行历史
-            historyService.addHistory(task);
+                // 插入新的执行历史
+                historyService.addHistory(task);
+
+                // 发邮件提醒
+                mailUtils.send(task.getEmail(), TASK_MAIL_SUBJECT, task);
+            }
         });
     }
 

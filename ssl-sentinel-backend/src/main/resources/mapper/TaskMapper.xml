@@ -60,7 +60,7 @@
             </if>
         </where>
         order by
-            ddl
+            ddl desc
     </select>
 
     <select id="executeList" resultType="cool.tch.entity.Task">

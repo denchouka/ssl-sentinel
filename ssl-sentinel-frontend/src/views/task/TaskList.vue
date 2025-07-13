@@ -299,7 +299,7 @@ import { ElMessage } from 'element-plus'
 import nodata from '@/assets/nodata.png'
 
 // 定义loading状态
-var loading = ref(false)
+var loading = ref<boolean>(false)
 
 // 定义对话框显示状态
 var dialogFormVisible = ref(false)
@@ -326,7 +326,7 @@ const indexMethod = (index: number) => {
 }
 
 // 表格的数据
-var taskData = []
+var taskData = ref([])
 var gridData = []
 
 interface Pagination {
@@ -463,10 +463,10 @@ const fetchTaskList = (pageNum, pageSize) => {
     status: taskForm.status,
     ddl: formatDate(taskForm.ddl)
   }
-  
+
   taskList(data).then(res => {
     // 表格的数据
-    taskData = res.data.list
+    taskData.value = res.data.list
     // 页码
     pagination.pageNum = res.data.pageNum
     // 总条目数
@@ -484,7 +484,7 @@ const fetchTaskList = (pageNum, pageSize) => {
  * 检索
  */
 const toSearch = () => {
-  // 无参数查询任务列表(默认是第1页)
+  // 查询任务列表(默认是第1页)
   fetchTaskList(1, pagination.pageSize)
 }
 
@@ -581,8 +581,8 @@ const saveEditedData = async (formEl: FormInstance | undefined) => {
       const res = editTask(taskDto)
       loading.value = false
       editDataDialogVisible.value = false
-      // 刷新查询任务列表(默认是第1页)
-      fetchTaskList(1, pagination.pageSize)
+      // 刷新查询任务列表
+      fetchTaskList(pagination.pageNum, pagination.pageSize)
       // 弹框提醒
       ElMessage({
         message: '修改成功',
