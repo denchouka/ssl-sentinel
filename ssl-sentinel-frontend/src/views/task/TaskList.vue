@@ -67,7 +67,7 @@
               </el-tooltip>
             </template>
           </el-table-column>
-          <el-table-column header-align="center" align="center" prop="content" label="提醒内容" width="380">
+          <el-table-column header-align="center" align="center" prop="content" label="提醒内容" width="300">
             <template #default="scope">
               <el-tooltip :content="scope.row.content" placement="top">
                 <div class="multi-line-ellipsis">{{ scope.row.content }}</div>
@@ -89,10 +89,13 @@
               <el-tag v-else type="danger">未知状态</el-tag>
             </template>
           </el-table-column>
-          <el-table-column header-align="center" align="center" prop="status" label="操作" width="100">
+          <el-table-column header-align="center" align="center" prop="status" label="操作" width="180">
             <template #default="scope">
-              <el-button v-if="scope.row.status == 1" type="warning" plain size="small" @click="toEdit(scope.row.id)">修改</el-button>
-              <el-button v-else type="success" plain size="small" @click="toShowHistory(scope.row.id)">执行日志</el-button>
+              <el-button v-if="scope.row.status == 1" type="warning" plain size="small" @click="toEditOrCopy(scope.row.id, true)">修改</el-button>
+              <div v-else>
+                <el-button type="success" plain size="small" @click="toShowHistory(scope.row.id)">执行日志</el-button>
+                <el-button type="info" plain size="small" @click="toEditOrCopy(scope.row.id, false)">复制</el-button>
+              </div>
             </template>
           </el-table-column>
         </el-table>
@@ -160,7 +163,7 @@
   <!-- 修改任务数据dialog -->
   <el-dialog
     v-model="editDataDialogVisible"
-    title="修改任务"
+    :title="isEditNotCopy ? '修改任务' : '复制任务'"
     width="600"
     align-center
     draggable
@@ -281,8 +284,8 @@
     <template #footer>
       <div class="dialog-footer">
         <el-button type="primary" plain @click="editDataDialogVisible = false">关闭</el-button>
-        <el-button type="primary" @click="saveEditedData(editTaskFormRef)">
-          <span v-if="!loading">保存修改</span>
+        <el-button type="primary" @click="saveEditeOrcopyData(editTaskFormRef)">
+          <span v-if="!loading">{{ isEditNotCopy ? '保存修改' : '确认复制' }}</span>
           <span v-else>保存中...</span>
         </el-button>
       </div>
@@ -293,7 +296,7 @@
 <script lang="ts" setup>
 import { reactive, ref, onMounted } from 'vue'
 import { formatDate } from '@/utils/index'
-import { taskList, showHistory, selectTask, editTask } from '@/api/index'
+import { taskList, showHistory, selectTask, editTask, addTask } from '@/api/index'
 import type { ComponentSize, FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import nodata from '@/assets/nodata.png'
@@ -305,6 +308,9 @@ var loading = ref<boolean>(false)
 var dialogFormVisible = ref(false)
 var noDataDialogVisible = ref(false)
 var editDataDialogVisible = ref(false)
+
+// 对话框默认是修改任务而不是复制
+var isEditNotCopy = ref(true)
 
 const options = [
   {
@@ -523,10 +529,10 @@ const handleNextClick = (val: number) => {
 }
 
 /**
- * 修改任务信息
+ * 修改/复制任务信息
  * @param id 任务id
  */
-const toEdit = async (id: number) => {
+const toEditOrCopy = async (id: number, isEdit: boolean) => {
   // 根据id查询任务数据
   const res = await selectTask(id)
   // 更新数据并
@@ -534,6 +540,8 @@ const toEdit = async (id: number) => {
   Object.assign(editTaskForm, res.data)
   // 显示对话框
   editDataDialogVisible.value = true
+  // 显示修改还是复制
+  isEditNotCopy.value = isEdit
 }
 
 /**
@@ -554,9 +562,9 @@ const toShowHistory = (id: number) => {
 }
 
 /**
- * 保存修改后的任务数据
+ * 保存修改/保存后的任务数据
  */
-const saveEditedData = async (formEl: FormInstance | undefined) => {
+const saveEditeOrcopyData = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
 
   await formEl.validate((valid, fields) => {
@@ -577,12 +585,19 @@ const saveEditedData = async (formEl: FormInstance | undefined) => {
         remark: editTaskForm.remark
       }
 
-      // 发送添加任务请求
-      const res = editTask(taskDto)
+      if (isEditNotCopy.value) {
+        // 发送修改任务请求
+        const res = editTask(taskDto)
+        // 刷新查询任务列表
+        fetchTaskList(pagination.pageNum, pagination.pageSize)
+      } else {
+        // 发送修改任务请求
+        const res = addTask(taskDto)
+        // 刷新查询任务列表（回到第一页）
+        fetchTaskList(1, pagination.pageSize)
+      }
       loading.value = false
       editDataDialogVisible.value = false
-      // 刷新查询任务列表
-      fetchTaskList(pagination.pageNum, pagination.pageSize)
       // 弹框提醒
       ElMessage({
         message: '修改成功',
@@ -593,6 +608,7 @@ const saveEditedData = async (formEl: FormInstance | undefined) => {
     }
   })  
 }
+
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
