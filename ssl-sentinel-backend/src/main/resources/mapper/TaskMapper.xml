@@ -131,4 +131,8 @@
             id = #{id}
     </update>
 
+    <select id="selectCount" resultType="java.lang.Integer">
+        select count(1) from task where domain_name = #{domainName} and ddl = #{ddl}
+    </select>
+
 </mapper>

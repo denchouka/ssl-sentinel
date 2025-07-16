@@ -26,4 +26,6 @@ public interface TaskMapper {
     Task selectById(@Param("id") Long id);
 
     void editTask(Task task);
+
+    int selectCount(@Param("domainName") String domainName, @Param("ddl") Date ddl);
 }

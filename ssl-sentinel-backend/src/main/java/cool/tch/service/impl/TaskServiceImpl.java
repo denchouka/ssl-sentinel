@@ -17,6 +17,7 @@ import cool.tch.vo.TaskSearchVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,6 +50,10 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult addTask(TaskDto taskDto) {
+        // 根据域名和过期日期判断是否存在
+        int count = taskMapper.selectCount(taskDto.getDomainName(), taskDto.getDdl());
+        Assert.isTrue(count == 0, "当前添加任务已存在，请确认后再添加");
+
         // 复制对象属性
         Task task = BeanCopyUtils.copyObject(taskDto, Task.class);
         // 默认状态为未执行
