@@ -587,22 +587,29 @@ const saveEditeOrcopyData = async (formEl: FormInstance | undefined) => {
 
       if (isEditNotCopy.value) {
         // 发送修改任务请求
-        const res = editTask(taskDto)
-        // 刷新查询任务列表
-        fetchTaskList(pagination.pageNum, pagination.pageSize)
+        editTask(taskDto).then(() => {
+          // 刷新查询任务列表
+          fetchTaskList(pagination.pageNum, pagination.pageSize)
+          // 弹框提醒
+          ElMessage({
+            message: '修改成功',
+            type: 'success',
+          })
+        })
       } else {
-        // 发送修改任务请求
-        const res = addTask(taskDto)
-        // 刷新查询任务列表（回到第一页）
-        fetchTaskList(1, pagination.pageSize)
+        // 发送复制任务请求
+        addTask(taskDto).then(() => {
+          // 刷新查询任务列表（回到第一页）
+          fetchTaskList(1, pagination.pageSize)
+          // 弹框提醒
+          ElMessage({
+            message: '复制成功',
+            type: 'success',
+          })
+        })
       }
       loading.value = false
       editDataDialogVisible.value = false
-      // 弹框提醒
-      ElMessage({
-        message: '修改成功',
-        type: 'success',
-      })
     } else {
       console.log('error submit!', fields)
     }
