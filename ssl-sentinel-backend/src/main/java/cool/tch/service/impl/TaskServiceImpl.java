@@ -116,19 +116,18 @@ public class TaskServiceImpl implements TaskService {
             // 修改任务状态
             Date ddl = task.getDdl();
             if (DateUtils.isTodayBeforeThanDate(ddl)) {
-                //  今天 < ddl : 执行完成     只更新db。任务结束。
-                taskMapper.updateTaskStatusById(task.getId(), TaskStatusEnum.COMPLETED.getStatus());
-            } else {
-                // 今天 >= ddl : 执行中
-                // 更新db
+                // 今天 < ddl : 执行中
                 taskMapper.updateTaskStatusById(task.getId(), TaskStatusEnum.IN_PROGRESS.getStatus());
-
-                // 插入新的执行历史
-                historyService.addHistory(task);
-
-                // 发邮件提醒
-                mailUtils.send(task.getEmail(), TASK_MAIL_SUBJECT, task);
+            } else {
+                //  今天 >= ddl : 执行完成
+                taskMapper.updateTaskStatusById(task.getId(), TaskStatusEnum.COMPLETED.getStatus());
             }
+
+            // 插入新的执行历史
+            historyService.addHistory(task);
+
+            // 发邮件提醒
+            mailUtils.send(task.getEmail(), TASK_MAIL_SUBJECT, task);
         });
     }
 
