@@ -42,4 +42,9 @@ public class TaskController {
     public ResponseResult editTask(@Validated @RequestBody TaskDto taskDto) {
         return taskService.editTask(taskDto);
     }
+
+    @PostMapping("/complete")
+    public ResponseResult completeTask(@RequestBody TaskDto taskDto) {
+        return taskService.completeTask(taskDto);
+    }
 }

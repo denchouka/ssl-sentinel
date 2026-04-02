@@ -26,9 +26,9 @@ public class HistoryServiceImpl implements HistoryService {
     private HistoryMapper historyMapper;
 
     @Override
-    public ResponseResult addHistory(Task task) {
+    public ResponseResult addHistory(Long id) {
         // 添加任务的执行历史
-        historyMapper.addHistory(task.getId(), DateUtils.now());
+        historyMapper.addHistory(id, DateUtils.now());
         return ResponseResult.success("添加任务的执行历史成功");
     }
 

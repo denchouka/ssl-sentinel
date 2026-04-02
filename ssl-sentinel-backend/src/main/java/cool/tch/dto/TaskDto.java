@@ -64,6 +64,6 @@ public class TaskDto implements Serializable {
     @Length(min = 10, max = 100, message = "提醒内容至少3位，最大10位")
     private String content;
 
-    @Length(max = 100, message = "提醒内容最大10位")
+    @Length(max = 200, message = "备注内容最大10位")
     private String remark;
 }

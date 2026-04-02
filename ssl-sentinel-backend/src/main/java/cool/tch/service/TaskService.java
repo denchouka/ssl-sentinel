@@ -43,4 +43,11 @@ public interface TaskService {
      * @return
      */
     ResponseResult editTask(TaskDto taskDto);
+
+    /**
+     * 结束任务
+     * @param taskDto
+     * @return
+     */
+    ResponseResult completeTask(TaskDto taskDto);
 }

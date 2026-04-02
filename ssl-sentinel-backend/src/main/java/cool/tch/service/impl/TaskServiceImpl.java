@@ -124,7 +124,7 @@ public class TaskServiceImpl implements TaskService {
             }
 
             // 插入新的执行历史
-            historyService.addHistory(task);
+            historyService.addHistory(task.getId());
 
             // 发邮件提醒
             mailUtils.send(task.getEmail(), TASK_MAIL_SUBJECT, task);
@@ -158,6 +158,13 @@ public class TaskServiceImpl implements TaskService {
         Task task = BeanCopyUtils.copyObject(taskDto, Task.class);
         taskMapper.editTask(task);
         return ResponseResult.success("修改任务成功");
+    }
+
+    @Override
+    public ResponseResult completeTask(TaskDto taskDto) {
+        taskMapper.updateTaskStatusById(taskDto.getId(), TaskStatusEnum.COMPLETED.getStatus());
+        historyService.addHistory(taskDto.getId());
+        return ResponseResult.success("结束任务成功");
     }
 
 }
