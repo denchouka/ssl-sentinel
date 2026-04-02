@@ -44,7 +44,7 @@
       <el-form-item label="用途" prop="purpose">
         <el-input
           v-model="taskForm.purpose"
-          :rows="2"
+          :rows="3"
           type="textarea"
           minlength="10"
           maxlength="100"
@@ -100,9 +100,9 @@
       <el-form-item label="备注" prop="remark">
         <el-input
           v-model="taskForm.remark"
-          :rows="2"
+          :rows="5"
           type="textarea"
-          maxlength="100"
+          maxlength="200"
           show-word-limit
           placeholder="输入备注"
           clearable
@@ -215,7 +215,7 @@ const rules = reactive<FormRules<TaskForm>>({
   ],
   remark: [
     { required: false, message: '请输入备注', trigger: 'blur' },
-    {  max: 100, message: 'Length should be less than 100', trigger: 'blur' }
+    {  max: 100, message: 'Length should be less than 200', trigger: 'blur' }
   ]
 })
 

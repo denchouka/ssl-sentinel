@@ -56,4 +56,12 @@ export function showHistory(id) {
     }
   })
 }
-
+export function completeTask(id) {
+  return request({
+    url: '/task/complete',
+    method: 'post',
+    data: {
+      id
+    }
+  })
+}

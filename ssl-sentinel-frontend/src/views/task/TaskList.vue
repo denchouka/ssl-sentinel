@@ -91,7 +91,30 @@
           </el-table-column>
           <el-table-column header-align="center" align="center" prop="status" label="操作" width="180">
             <template #default="scope">
-              <el-button v-if="scope.row.status == 1" type="warning" plain size="small" @click="toEditOrCopy(scope.row.id, true)">修改</el-button>
+              <div v-if="scope.row.status == 1">
+                <el-button type="warning" plain size="small" @click="toEditOrCopy(scope.row.id, true)">修改</el-button>
+                <el-popconfirm
+                  title="确定要手动结束任务吗"
+                  @confirm="toComplete(scope.row.id)"
+                  placement="top"
+                >
+                  <template #reference>
+                    <el-button type="danger" plain size="small">结束</el-button>
+                  </template>
+                </el-popconfirm>
+              </div>
+              <div v-else-if="scope.row.status == 2">
+                <el-button type="success" plain size="small" @click="toShowHistory(scope.row.id)">执行日志</el-button>
+                <el-popconfirm
+                  title="确定要手动结束任务吗"
+                  @confirm="toComplete(scope.row.id)"
+                  placement="top"
+                >
+                  <template #reference>
+                    <el-button type="danger" plain size="small">结束</el-button>
+                  </template>
+                </el-popconfirm>
+              </div>
               <div v-else>
                 <el-button type="success" plain size="small" @click="toShowHistory(scope.row.id)">执行日志</el-button>
                 <el-button type="info" plain size="small" @click="toEditOrCopy(scope.row.id, false)">复制</el-button>
@@ -215,7 +238,7 @@
       <el-form-item label="用途" prop="purpose">
         <el-input
           v-model="editTaskForm.purpose"
-          :rows="2"
+          :rows="3"
           type="textarea"
           minlength="10"
           maxlength="100"
@@ -271,9 +294,9 @@
       <el-form-item label="备注" prop="remark">
         <el-input
           v-model="editTaskForm.remark"
-          :rows="2"
+          :rows="5"
           type="textarea"
-          maxlength="100"
+          maxlength="200"
           show-word-limit
           placeholder="输入备注"
           clearable
@@ -296,7 +319,7 @@
 <script lang="ts" setup>
 import { reactive, ref, onMounted } from 'vue'
 import { formatDate } from '@/utils/index'
-import { taskList, showHistory, selectTask, editTask, addTask } from '@/api/index'
+import { taskList, showHistory, selectTask, editTask, addTask, completeTask } from '@/api/index'
 import type { ComponentSize, FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import nodata from '@/assets/nodata.png'
@@ -614,6 +637,16 @@ const saveEditeOrcopyData = async (formEl: FormInstance | undefined) => {
       console.log('error submit!', fields)
     }
   })  
+}
+
+/**
+ * 结束任务
+ * @param id 任务id
+ */
+ const toComplete = (id: number) => {
+  completeTask(id)
+  // 刷新查询任务列表
+  fetchTaskList(pagination.pageNum, pagination.pageSize)
 }
 
 </script>
